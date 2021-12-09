@@ -1,26 +1,57 @@
 import React, {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
-
+import {useNavigate, useParams} from "react-router-dom";
+import {getFoodItemFromId} from "../../services/foodItemService";
+import {getProfile} from "../../services/userService";
+import {addMenuItemToRestaurant} from "../../services/menuService";
+import GetRestaurantsFromItem from "./GetRestaurantsFromItem";
 
 const DetailsScreen = () => {
+    const navigate = useNavigate();
     const params = useParams();
-    // let query = `https://api.spoonacular.com/recipes/${params.id}/information?includeNutrition=false&apiKey=28c8823999dc4ef783647f58d191caad`;
-    let query = `http://localhost:4000/api/details/${params.id}`
+
     let [itemDetails, setItemDetails] = useState({});
-    const findItemById = () => {
-        fetch(query)
-            .then(response => response.json()).then((result) => setItemDetails(result))
+    let [user, setUser] = useState({});
+
+    useEffect(() => {
+        getProfile().then((user) => setUser(user))
+        getFoodItemFromId(params.id).then((result) => setItemDetails(result));
+    }, [params.id]);
+
+    const getRoleSpecificDiv = (user) => {
+        if (user.role === "Restaurant") {
+            return (
+                <div>
+                    <button className={"btn btn-primary"} onClick={() => {
+                        addMenuItemToRestaurant(user, itemDetails).then(navigate("/profile"));
+                    }}>Add FoodItem to Menu
+                    </button>
+                </div>
+            )
+        } else if (user.role === "Customer") {
+            return (
+                <div>
+                    <GetRestaurantsFromItem item={itemDetails}/>
+                </div>
+            )
+        }
+        return (
+            <div>
+                {user.role}
+            </div>
+        )
     }
-    useEffect(findItemById, []);
-    return(
+
+    return (
         <div>
             <h1>
                 {itemDetails.title}
             </h1>
-            {/*{itemDetails.summary}*/}
-            <div dangerouslySetInnerHTML={{__html:itemDetails.summary}}/>
+            <div dangerouslySetInnerHTML={{__html: itemDetails.summary}}/>
             <br/>
-            <img src={itemDetails.image} />
+            <img src={itemDetails.image} alt={itemDetails.title}/>
+            {user.username}
+            {getRoleSpecificDiv(user)}
+            {/*{<GetRoleSpecificDiv user={user} />}*/}
         </div>
     )
 }

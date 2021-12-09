@@ -5,7 +5,7 @@ import {signupUser} from "../../services/userService";
 const SignUpScreen = () => {
     const navigate = useNavigate();
 
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState({role: "Customer"});
 
     const signupClickHandler = () => {
         if(user.password !== user.verifypassword) {
@@ -34,6 +34,10 @@ const SignUpScreen = () => {
                 break;
             case "verify-password":
                 updatedUser.verifypassword = change;
+                setUser(updatedUser);
+                break;
+            case "role":
+                updatedUser.role = change;
                 setUser(updatedUser);
                 break;
             default:
@@ -65,6 +69,16 @@ const SignUpScreen = () => {
                        onChange={(e) => {
                     formHandler(e.target.value, "verify-password");
                 }}/>
+            </label>
+            <label>
+                Role:
+                <select onChange={(e) => {
+                    formHandler(e.target.value, "role");
+                }}>
+                    <option value="Customer" selected>Customer</option>
+                    <option value="Restaurant">Restaurant</option>
+                    <option value="Waiter">Waiter</option>
+                </select>
             </label>
             {/*{(user.password !== user.verifypassword) && (<div>Passwords dont match</div>)}*/}
             <button className={"btn btn-primary"} onClick={signupClickHandler}>Sign-Up</button>

@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
+import {searchFoodItems} from "../../services/foodItemService";
+import SearchItem from "./SearchItem";
 
-// let query = `https://api.spoonacular.com/recipes/complexSearch?query=${searchTerm}&number=2&apiKey=28c8823999dc4ef783647f58d191caad`
-let query = `http://localhost:4000/api/search`
 const SearchScreen = () => {
     const params = useParams();
     const navigate = useNavigate();
@@ -10,28 +10,23 @@ const SearchScreen = () => {
     const [searchTerm, setSearchTerm] = useState(item);
     const [foodItem, setFoodItem] = useState([]);
 
-    const findFoodItem = () => {
-        if(searchTerm !== '') {
+    const searchClickHandler = () => {
+        if (searchTerm !== '') {
             navigate(`/search/${searchTerm}`);
-            fetch(query).then(res => res.json()).then((result) => setFoodItem(result.results));
+            searchFoodItems(searchTerm).then((result) => setFoodItem(result.results));
         }
     }
-    useEffect(findFoodItem, []);
+
+    useEffect(() => {
+        searchFoodItems(searchTerm).then((result) => setFoodItem(result.results))
+    }, [searchTerm]);
     return (
         <div>
-            <input onChange={e => setSearchTerm(e.target.value)}/>
-            <button className={"btn btn-primary"} onClick={findFoodItem}>Search</button>
+            <input value={searchTerm} onChange={e => setSearchTerm(e.target.value)}/>
+            <button className={"btn btn-primary"} onClick={searchClickHandler}>Search</button>
             <ul>
                 {
-                    foodItem.map(item =>
-                         <Link to={`/details/${item.id}`}>
-                             <li key={item.id}>
-                                 <img src={item.image} height={"50px"}
-                                      alt={item.title}/>
-                                 {item.title}
-                             </li>
-                         </Link>
-                    )
+                    foodItem.map((item) => <SearchItem item={item}/>)
                 }
             </ul>
         </div>
