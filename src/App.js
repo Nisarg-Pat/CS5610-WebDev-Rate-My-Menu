@@ -4,6 +4,8 @@ import HomeScreen from "./components/HomeScreen";
 import LoginScreen from "./components/LoginScreen";
 import ProfileScreen from "./components/ProfileScreen";
 import SignUpScreen from "./components/SignUpScreen";
+import SearchScreen from "./components/SearchScreen";
+import DetailsScreen from "./components/DetailsScreen";
 
 function App() {
   return (
@@ -22,6 +24,13 @@ function App() {
                 </Route>
                 <Route element = {<ProfileScreen/>}>
                     <Route path={"/profile"}/>
+                </Route>
+                <Route element = {<SearchScreen/>}>
+                    <Route path={"/search/:searchTerm"}/>
+                    <Route path={"/search"}/>
+                </Route>
+                <Route element = {<DetailsScreen/>}>
+                    <Route path={"/details/:id"}/>
                 </Route>
             </Routes>
         </div>

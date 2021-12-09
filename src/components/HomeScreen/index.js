@@ -12,11 +12,17 @@ const HomeScreen = () => {
       navigate("/signup");
     }
 
+    const searchClickHandler = () => {
+        navigate("/search");
+    }
+
     return(
         <div>
             <button className={"btn btn-primary"} onClick={loginClickHandler}>Login</button>
             <hr/>
             <button className={"btn btn-primary"} onClick={signupClickHandler}>Sign-Up</button>
+            <hr/>
+            <button className={"btn btn-primary"} onClick={searchClickHandler}>Search</button>
         </div>
     )
 }
