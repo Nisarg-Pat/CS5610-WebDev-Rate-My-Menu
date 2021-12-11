@@ -24,6 +24,7 @@ function App() {
                 </Route>
                 <Route element = {<ProfileScreen/>}>
                     <Route path={"/profile"}/>
+                    <Route path={"/profile/:profileId"}/>
                 </Route>
                 <Route element = {<SearchScreen/>}>
                     <Route path={"/search/:searchTerm"}/>

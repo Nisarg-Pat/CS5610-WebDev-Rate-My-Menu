@@ -1,44 +1,34 @@
 import React, {useEffect, useState} from "react";
+import {getProfile} from "../../services/userService";
+import NavigationSidebar from "../NavigationSideBar";
+import ProfileScreenComponent from "./ProfileScreenComponent";
 import {useNavigate} from "react-router-dom";
-import {getProfile, logoutUser} from "../../services/userService";
-import GetRestaurantMenu from "./GetRestaurantMenu";
 
 const ProfileScreen = () => {
     const navigate = useNavigate();
-
-    const logoutClickHandler = () => {
-        logoutUser().then(() => navigate("/"));
-    }
-
     let [user, setUser] = useState({});
 
     useEffect(() => {
-        getProfile().then((user) => setUser(user))
-    }, [])
-
-    const getRoleSpecificDiv = (user) => {
-        if (user.role === "Restaurant") {
-            return (
-                <GetRestaurantMenu restaurant={user}/>
-            )
-        }
-        return <></>
-    }
+        getProfile().then((user) => {
+            if (user._id === undefined) {
+                navigate("/home");
+            } else {
+                setUser(user);
+            }
+        })
+    }, [navigate])
 
     return (
         <>
-            <h1>
-                {user.username}
-            </h1>
-            <h1>
-                {user.role}
-            </h1>
-            <div>
-                <button className="btn btn-secondary" onClick={logoutClickHandler}>Logout</button>
+            <div className="row">
+                <div className={"col-2"}>
+                    <NavigationSidebar active={"home"} user={user} setUser={setUser}/>
+                </div>
+
+                <div className={"col-10"}>
+                    <ProfileScreenComponent user={user}/>
+                </div>
             </div>
-            <button className={"btn btn-primary"} onClick={() => navigate("/search")}>Search
-            </button>
-            {getRoleSpecificDiv(user)}
         </>
     )
 }

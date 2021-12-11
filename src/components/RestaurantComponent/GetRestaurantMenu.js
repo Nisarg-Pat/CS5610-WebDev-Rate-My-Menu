@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from "react";
 import {findMenuOfRestaurant} from "../../services/menuService";
-import FoodItem from "./FoodItem";
+import FoodItem from "../FoodIemComponent/FoodItem";
 
 const GetRestaurantMenu = ({restaurant}) => {
     let [menu, setMenu] = useState([]);
     useEffect(() => {
-        findMenuOfRestaurant(restaurant).then((menu) => setMenu(menu))
+        findMenuOfRestaurant(restaurant).then((menu) => {
+            setMenu(menu);
+            console.log(menu);
+        });
     }, [restaurant]);
     return (
         <div>

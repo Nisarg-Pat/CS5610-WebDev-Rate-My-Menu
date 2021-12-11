@@ -1,11 +1,19 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {signupUser} from "../../services/userService";
+import {getProfile, signupUser} from "../../services/userService";
 
 const SignUpScreen = () => {
     const navigate = useNavigate();
 
     const [user, setUser] = useState({role: "Customer"});
+
+    useEffect(() => {
+        getProfile().then((user) => {
+            if (user._id !== undefined) {
+                navigate("/home");
+            }
+        })
+    }, [navigate])
 
     const signupClickHandler = () => {
         if(user.password !== user.verifypassword) {

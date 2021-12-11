@@ -1,18 +1,26 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {loginUser} from "../../services/userService";
+import {getProfile, loginUser} from "../../services/userService";
 
 const LoginScreen = () => {
     const navigate = useNavigate();
 
     const [user, setUser] = useState({});
 
+    useEffect(() => {
+        getProfile().then((user) => {
+            if (user._id !== undefined) {
+                navigate("/home");
+            }
+        })
+    }, [navigate])
+
     const loginClickHandler = () => {
         loginUser(user).then((response) => {
-            if(response.status === 403) {
+            if (response.status === 403) {
                 alert("Invalid Username or Password");
             } else {
-                navigate("/profile");
+                navigate("/home");
             }
         })
     }
@@ -33,7 +41,7 @@ const LoginScreen = () => {
         }
     }
 
-    return(
+    return (
         <div>
             <label>
                 Username:

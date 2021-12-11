@@ -1,29 +1,26 @@
-import React from "react";
-import {useNavigate} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import NavigationSidebar from "../NavigationSideBar";
+import HomeScreenComponent from "./HomeScreenComponent";
+import {getProfile} from "../../services/userService";
 
 const HomeScreen = () => {
-    const navigate = useNavigate();
+    let [user, setUser] = useState({});
 
-    const loginClickHandler = () => {
-      navigate("/login");
-    }
+    useEffect(() => {
+        getProfile().then((user) => setUser(user))
+    }, [])
+    return (
+        <>
+            <div className="row">
+                <div className={"col-2"}>
+                    <NavigationSidebar active={"home"} user={user} setUser={setUser}/>
+                </div>
 
-    const signupClickHandler = () => {
-      navigate("/signup");
-    }
-
-    const searchClickHandler = () => {
-        navigate("/search");
-    }
-
-    return(
-        <div>
-            <button className={"btn btn-primary"} onClick={loginClickHandler}>Login</button>
-            <hr/>
-            <button className={"btn btn-primary"} onClick={signupClickHandler}>Sign-Up</button>
-            <hr/>
-            <button className={"btn btn-primary"} onClick={searchClickHandler}>Search</button>
-        </div>
+                <div className={"col-10"}>
+                    <HomeScreenComponent user={user}/>
+                </div>
+            </div>
+        </>
     )
 }
 
