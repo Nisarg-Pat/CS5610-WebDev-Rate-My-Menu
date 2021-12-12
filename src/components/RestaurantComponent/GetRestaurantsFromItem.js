@@ -10,10 +10,8 @@ const GetRestaurantsFromItem = ({item}) => {
 
     return (
         <div>
-            <ul>
-                {restaurants.map(
-                    (restaurant) => <RestaurantItem restaurant={restaurant.restaurant}/>)}
-            </ul>
+            {restaurants.map(
+                (restaurant) => <RestaurantItem restaurant={restaurant.restaurant} price={restaurant.price}/>)}
         </div>
     )
 }

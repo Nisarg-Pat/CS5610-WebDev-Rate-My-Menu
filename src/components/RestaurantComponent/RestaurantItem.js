@@ -1,13 +1,14 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-const RestaurantItem = ({restaurant}) => {
+const RestaurantItem = ({restaurant, price}) => {
     return (
-        <Link to={`/profile/${restaurant._id}`}>
-            <li key={restaurant._id}>
+        <div className={"al-restaurantListItem"}>
+            <Link to={`/profile/${restaurant._id}`}>
                 {restaurant.username}
-            </li>
-        </Link>
+            </Link>
+            : ${price}
+        </div>
     )
 }
 

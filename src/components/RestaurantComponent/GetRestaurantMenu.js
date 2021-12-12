@@ -12,9 +12,12 @@ const GetRestaurantMenu = ({restaurant}) => {
     }, [restaurant]);
     return (
         <div>
-            <ul>
+            <h2>
+                Menu
+            </h2>
+            <div>
                 {menu.map((item) => <FoodItem foodItem={item.foodItem}/>)}
-            </ul>
+            </div>
         </div>
     )
 }

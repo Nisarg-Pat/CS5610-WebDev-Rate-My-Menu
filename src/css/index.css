@@ -1,3 +1,16 @@
 body {
     margin-top: 10px;
 }
+
+.al-ratingList {
+}
+
+.al-ratingListItem {
+    margin: 10px;
+    border: 1px solid black;
+}
+
+.al-restaurantListItem {
+    margin: 10px;
+    border: 1px solid black;
+}

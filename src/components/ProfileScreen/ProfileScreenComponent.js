@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
-import GetRestaurantMenu from "../RestaurantComponent/GetRestaurantMenu";
+import {useParams} from "react-router-dom";
 import {findProfileById} from "../../services/userService";
+import GetDetailsOfOwnProfile from "./GetDetailsOfOwnProfile";
+import GetDetailsOfDifferentProfile from "./GetDetailsOfDifferentProfile";
 
 const ProfileScreenComponent = ({user}) => {
-    const navigate = useNavigate();
     const params = useParams();
     const profileId = params.profileId || '';
     const [profile, setProfile] = useState([]);
@@ -15,32 +15,11 @@ const ProfileScreenComponent = ({user}) => {
         }
     }, [profileId])
 
-    const getRoleSpecificDiv = (user) => {
-        if (user.role === "Restaurant") {
-            return (
-                <GetRestaurantMenu restaurant={user}/>
-            )
-        }
-        return <></>
-    }
-
     return (
         <>
             {profileId === '' ?
-             <>
-                 <h1>
-                     {user.username}
-                 </h1>
-                 <h1>
-                     {user.role}
-                 </h1>
-                 <button className={"btn btn-primary"} onClick={() => navigate("/search")}>Search
-                 </button>
-                 {getRoleSpecificDiv(user)}
-             </> :
-             <h1>
-                 {profile.username}
-             </h1>
+             <GetDetailsOfOwnProfile user={user}/> :
+             <GetDetailsOfDifferentProfile user={user} profile={profile}/>
             }
         </>
     )

@@ -2,23 +2,10 @@ const SERVER_API = process.env.NODE_ENV === 'development'
                    ? "http://localhost:4000/api"
                    : "";
 
-
-export const findMenuOfRestaurant = (restaurant) => {
-
-    return fetch(`${SERVER_API}/restaurant_menu`, {
+export const addRestaurantRating = (restaurantRating) => {
+    return fetch(`${SERVER_API}/restaurantRating`, {
         method: "POST",
-        body : JSON.stringify({restaurant: restaurant}),
-        credentials : "include",
-        headers: {
-            "content-type": "application/json"
-        }
-    }).then((response) => response.json())
-}
-
-export const addMenuItemToRestaurant = (restaurant, item, price) => {
-    return fetch(`${SERVER_API}/menu`, {
-        method: "POST",
-        body : JSON.stringify({restaurant: restaurant, foodItem: item, price: price}),
+        body : JSON.stringify(restaurantRating),
         credentials : "include",
         headers: {
             "content-type": "application/json"
@@ -26,10 +13,21 @@ export const addMenuItemToRestaurant = (restaurant, item, price) => {
     });
 }
 
-export const findRestaurantsFromItem = (item) => {
-    return fetch(`${SERVER_API}/item_restaurants`, {
+export const getRatingsOfRestaurant = (restaurant) => {
+    return fetch(`${SERVER_API}/ratingsOfRestaurant`, {
         method: "POST",
-        body : JSON.stringify({foodItem: item}),
+        body : JSON.stringify({restaurant}),
+        credentials : "include",
+        headers: {
+            "content-type": "application/json"
+        }
+    }).then((response) => response.json());
+}
+
+export const getRestaurantRatingsByUser = (user) => {
+    return fetch(`${SERVER_API}/ratingsOfRestaurantByUser`, {
+        method: "POST",
+        body : JSON.stringify({user}),
         credentials : "include",
         headers: {
             "content-type": "application/json"
