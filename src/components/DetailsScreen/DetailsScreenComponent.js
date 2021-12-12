@@ -6,6 +6,7 @@ import GetRestaurantsFromItem from "../RestaurantComponent/GetRestaurantsFromIte
 import {getRatingsOfFoodItem} from "../../services/userFoodRatingService";
 import RatingBox from "../RatingComponent/RatingBox";
 import UserRatingList from "../RatingComponent/UserRatingList";
+import {addFoodLike} from "../../services/userFoodLikesService";
 
 const DetailsScreenComponent = ({user}) => {
     const navigate = useNavigate();
@@ -23,8 +24,29 @@ const DetailsScreenComponent = ({user}) => {
         });
     }, [params.id, itemDetails]);
 
+    const getAverageOfRatings = () => {
+        const ratings = foodRatings.map((rating) => rating.rating);
+        let totalRatings = 0;
+        for (let i = 0; i < ratings.length; i++) {
+            totalRatings += ratings[i];
+        }
+        return (totalRatings / ratings.length).toFixed(2);
+    }
+
+    const likeClickHandler = () => {
+        if(user._id === undefined) {
+            navigate("/login");
+        }
+        const like = {
+            user,
+            foodItem: itemDetails,
+            time: new Date()
+        }
+        addFoodLike(like).then(navigate("/profile"));
+    }
+
     const getRoleSpecificDiv = (user) => {
-        if (user.role === "Restaurant") {
+        if (user.role === "restaurant") {
             return (
                 <div>
                     <input type={"number"}
@@ -46,7 +68,7 @@ const DetailsScreenComponent = ({user}) => {
                     {invalidPriceString}
                 </div>
             )
-        } else if (user.role === "Customer") {
+        } else if (user.role === "customer") {
             return (
                 <>
                     <RatingBox user={user} item={itemDetails} ratings={foodRatings}
@@ -61,15 +83,6 @@ const DetailsScreenComponent = ({user}) => {
         )
     }
 
-    const getAverageOfRatings = () => {
-        const ratings = foodRatings.map((rating) => rating.rating);
-        let totalRatings = 0;
-        for (let i = 0; i < ratings.length; i++) {
-            totalRatings += ratings[i];
-        }
-        return (totalRatings / ratings.length).toFixed(2);
-    }
-
     return (
         <div className={"row"}>
             <div className={"col-8"}>
@@ -79,6 +92,9 @@ const DetailsScreenComponent = ({user}) => {
                 <div dangerouslySetInnerHTML={{__html: itemDetails.summary}}/>
                 <br/>
                 <img src={itemDetails.image} alt={itemDetails.title}/>
+                <br/>
+                <button className={"btn btn-primary"} onClick={likeClickHandler}>Like this Food</button>
+                <br/>
                 <h2>
                     Restaurants Serving this item:
                 </h2>

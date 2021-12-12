@@ -43,7 +43,7 @@ const HomeScreenComponent = ({user}) => {
                 <h1>
                     Hello {user.username}
                 </h1>
-                {user.role === 'Customer' ?
+                {user.role === 'customer' ?
                  <div>
                      <h1>Latest Food Ratings By You: </h1>
                      <UserRatingList ratings={foodRatings} showFoodTitle={true}/>

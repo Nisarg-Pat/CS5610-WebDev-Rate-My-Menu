@@ -12,10 +12,10 @@ const UserRatingItem = ({
             {showUsername ? <Link to={`/profile/${rating.user._id}`}>{rating.user.username}</Link> : <></>}
             {showFoodTitle ? <Link to={`/details/${rating.foodItem.id}`}>{rating.foodItem.title}</Link> : <></>}
             {showRestaurantName ? <Link to={`/profile/${rating.restaurant._id}`}>{rating.restaurant.username}</Link> : <></>}
+            : {rating.rating} / 5
             <br/>
             {rating.comment}
             <br/>
-            {rating.rating}
         </div>
     )
 }

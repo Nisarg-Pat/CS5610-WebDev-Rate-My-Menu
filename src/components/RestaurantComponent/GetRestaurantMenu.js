@@ -7,16 +7,12 @@ const GetRestaurantMenu = ({restaurant}) => {
     useEffect(() => {
         findMenuOfRestaurant(restaurant).then((menu) => {
             setMenu(menu);
-            console.log(menu);
         });
     }, [restaurant]);
     return (
         <div>
-            <h2>
-                Menu
-            </h2>
             <div>
-                {menu.map((item) => <FoodItem foodItem={item.foodItem}/>)}
+                {menu.map((item) => <FoodItem foodItem={item.foodItem} price={item.price}/>)}
             </div>
         </div>
     )

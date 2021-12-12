@@ -7,7 +7,7 @@ const RestaurantItem = ({restaurant, price}) => {
             <Link to={`/profile/${restaurant._id}`}>
                 {restaurant.username}
             </Link>
-            : ${price}
+            {price !== undefined ? <>: ${price}</> : <></>}
         </div>
     )
 }

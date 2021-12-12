@@ -2,21 +2,24 @@ import React, {useEffect, useState} from "react";
 import {getProfile} from "../../services/userService";
 import NavigationSidebar from "../NavigationSideBar";
 import ProfileScreenComponent from "./ProfileScreenComponent";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 const ProfileScreen = () => {
     const navigate = useNavigate();
+    const params = useParams();
+    const profileId = params.profileId || '';
+
     let [user, setUser] = useState({});
 
     useEffect(() => {
         getProfile().then((user) => {
-            if (user._id === undefined) {
+            if (user._id === undefined && profileId ==='') {
                 navigate("/home");
             } else {
                 setUser(user);
             }
         })
-    }, [navigate])
+    }, [profileId, navigate])
 
     return (
         <>
@@ -26,7 +29,7 @@ const ProfileScreen = () => {
                 </div>
 
                 <div className={"col-10"}>
-                    <ProfileScreenComponent user={user}/>
+                    <ProfileScreenComponent user={user} profileId={profileId}/>
                 </div>
             </div>
         </>

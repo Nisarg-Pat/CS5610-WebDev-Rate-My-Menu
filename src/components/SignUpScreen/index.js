@@ -4,8 +4,14 @@ import {getProfile, signupUser} from "../../services/userService";
 
 const SignUpScreen = () => {
     const navigate = useNavigate();
-
-    const [user, setUser] = useState({role: "Customer"});
+    const [user, setUser] = useState({
+                                         username: "",
+                                         password: "",
+                                         verifypassword: "",
+                                         name: "",
+                                         date: "",
+                                         role: "customer"
+                                     });
 
     useEffect(() => {
         getProfile().then((user) => {
@@ -16,12 +22,19 @@ const SignUpScreen = () => {
     }, [navigate])
 
     const signupClickHandler = () => {
-        if(user.password !== user.verifypassword) {
+        console.log(user);
+        if (user.username === "" || user.password === "" || user.verifypassword === "" || user.name
+            === "" || user.role === "" || user.date === "") {
+            alert("Enter correct details");
+            return;
+        }
+        if (user.password !== user.verifypassword) {
             alert("Passwords dont match");
             return;
         }
+
         signupUser(user).then((response) => {
-            if(response.status === 403) {
+            if (response.status === 403) {
                 alert("Username is already taken");
             } else {
                 navigate("/profile");
@@ -30,66 +43,89 @@ const SignUpScreen = () => {
     }
 
     const formHandler = (change, inputType) => {
-        let updatedUser = user;
         switch (inputType) {
             case "username":
-                updatedUser.username = change;
-                setUser(updatedUser);
+                setUser({...user, username: change});
                 break;
             case "password":
-                updatedUser.password = change;
-                setUser(updatedUser);
+                setUser({...user, password: change});
                 break;
             case "verify-password":
-                updatedUser.verifypassword = change;
-                setUser(updatedUser);
+                setUser({...user, verifypassword: change});
                 break;
             case "role":
-                updatedUser.role = change;
-                setUser(updatedUser);
+                setUser({...user, role: change});
+                break;
+            case "date":
+                setUser({...user, date: change});
+                break;
+            case "name":
+                setUser({...user, name: change});
                 break;
             default:
                 break;
         }
     }
 
-    return(
+    return (
         <div>
             <label>
                 Username:
                 <input value={user.username}
                        onChange={(e) => {
-                    formHandler(e.target.value, "username");
-                }}/>
+                           formHandler(e.target.value, "username");
+                       }}/>
             </label>
+            <br/>
             <label>
                 Password:
                 <input type="password"
                        value={user.password}
                        onChange={(e) => {
-                    formHandler(e.target.value, "password");
-                }}/>
+                           formHandler(e.target.value, "password");
+                       }}/>
             </label>
+            <br/>
             <label>
                 Re-enter Password:
                 <input type="password"
                        value={user.verifypassword}
                        onChange={(e) => {
-                    formHandler(e.target.value, "verify-password");
-                }}/>
+                           formHandler(e.target.value, "verify-password");
+                       }}/>
             </label>
+            <br/>
+            <label>
+                Name:
+                <input
+                    value={user.name}
+                    onChange={(e) => {
+                        formHandler(e.target.value, "name");
+                    }}/>
+            </label>
+            <br/>
+            <label>
+                {user.role === "restaurant" ? <>Opening Date:</> : <>Date Of Birth:</>}
+                <input type="date"
+                       value={user.date}
+                       onChange={(e) => {
+                           formHandler(e.target.value, "date");
+                       }}/>
+            </label>
+            <br/>
             <label>
                 Role:
-                <select onChange={(e) => {
+                <select value={user.role} onChange={(e) => {
                     formHandler(e.target.value, "role");
                 }}>
-                    <option value="Customer" selected>Customer</option>
-                    <option value="Restaurant">Restaurant</option>
-                    <option value="Waiter">Waiter</option>
+                    <option value="customer">Customer</option>
+                    <option value="restaurant">Restaurant</option>
+                    <option value="waiter">Waiter</option>
                 </select>
             </label>
-            {/*{(user.password !== user.verifypassword) && (<div>Passwords dont match</div>)}*/}
+            <br/>
             <button className={"btn btn-primary"} onClick={signupClickHandler}>Sign-Up</button>
+            <br/>
         </div>
     )
 }

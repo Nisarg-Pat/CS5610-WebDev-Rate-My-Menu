@@ -18,7 +18,7 @@ const RatingBox = ({user, restaurant, item, ratings, setRatings}) => {
                 user,
                 restaurant: restaurant,
                 comment,
-                rating: 4.5,
+                rating: stars,
                 time: new Date()
             }
             addRestaurantRating(restaurantRating).then(() => {

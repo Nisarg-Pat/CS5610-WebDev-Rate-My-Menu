@@ -8,35 +8,24 @@ import SearchScreen from "./components/SearchScreen";
 import DetailsScreen from "./components/DetailsScreen";
 
 function App() {
-  return (
-    <BrowserRouter>
-        <div className="container">
-            <Routes>
-                <Route element={<HomeScreen/>}>
-                    <Route path={"/"}/>
-                    <Route path={"/home"}/>
-                </Route>
-                <Route element = {<LoginScreen/>}>
-                    <Route path={"/login"}/>
-                </Route>
-                <Route element = {<SignUpScreen/>}>
-                    <Route path={"/signup"}/>
-                </Route>
-                <Route element = {<ProfileScreen/>}>
-                    <Route path={"/profile"}/>
-                    <Route path={"/profile/:profileId"}/>
-                </Route>
-                <Route element = {<SearchScreen/>}>
-                    <Route path={"/search/:searchTerm"}/>
-                    <Route path={"/search"}/>
-                </Route>
-                <Route element = {<DetailsScreen/>}>
-                    <Route path={"/details/:id"}/>
-                </Route>
-            </Routes>
-        </div>
-    </BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <div className="container">
+                <Routes>
+                    <Route path={"/"} element={<HomeScreen/>}/>
+                    <Route path={"/home"} element={<HomeScreen/>}/>
+                    <Route path={"/login"} element={<LoginScreen/>}/>
+                    <Route path={"/signup"} element={<SignUpScreen/>}/>
+                    <Route path={"/signup/:role"} element={<SignUpScreen/>}/>
+                    <Route path={"/profile"} element={<ProfileScreen/>}/>
+                    <Route path={"/profile/:profileId"} element={<ProfileScreen/>}/>
+                    <Route path={"/search"} element={<SearchScreen/>}/>
+                    <Route path={"/search/:searchTerm"} element={<SearchScreen/>}/>
+                    <Route path={"/details/:id"} element={<DetailsScreen/>}/>
+                </Routes>
+            </div>
+        </BrowserRouter>
+    );
 }
 
 export default App;

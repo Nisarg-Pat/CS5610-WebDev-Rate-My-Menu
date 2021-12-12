@@ -11,7 +11,7 @@ const GetRestaurantsFromItem = ({item}) => {
     return (
         <div>
             {restaurants.map(
-                (restaurant) => <RestaurantItem restaurant={restaurant.restaurant} price={restaurant.price}/>)}
+                (restaurant) => <RestaurantItem restaurant={restaurant.restaurant} price={restaurant.price} key={restaurant.restaurant._id}/>)}
         </div>
     )
 }
