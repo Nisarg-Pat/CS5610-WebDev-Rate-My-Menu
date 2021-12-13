@@ -9,13 +9,54 @@ const UserRatingItem = ({
                         }) => {
     return (
         <div className={"al-ratingListItem al-margin-bottom-small al-padding-small"}>
-            {showUsername ? <Link to={`/profile/${rating.user._id}`} className={``}>{rating.user.username}</Link> : <></>}
-            {showFoodTitle ? <Link to={`/details/${rating.foodItem.id}`}>{rating.foodItem.title}</Link> : <></>}
-            {showRestaurantName ? <Link to={`/profile/${rating.restaurant._id}`}>{rating.restaurant.username}</Link> : <></>}
-            - Rating: {rating.rating} / 5
-            <br/>
-            {rating.comment}
-            <br/>
+            {showUsername ?
+             <div className={"al-flex"}>
+                 <Link to={`/profile/${rating.user._id}`}>
+                     <img src={rating.user.image}
+                          alt={rating.user.username}
+                          className={"al-foodItem-img "}/>
+                 </Link>
+                 <span className={"al-padding-left-small"}>
+                     <Link to={`/profile/${rating.user._id}`}
+                           className={`al-no-underline al-color-white`}>
+                         {rating.user.username}
+                     </Link> - Rating: {rating.rating} / 5
+                 <br/>
+                     {rating.comment}
+                 </span>
+             </div> : <></>}
+            {showFoodTitle ?
+             <div className={"al-flex"}>
+                 <Link to={`/details/${rating.foodItem.id}`}>
+                     <img src={rating.foodItem.image}
+                          alt={rating.foodItem.title}
+                          className={"al-foodItem-img "}/>
+                 </Link>
+                 <span className={"al-padding-left-small"}>
+                     <Link to={`/details/${rating.foodItem.id}`}
+                         className={`al-no-underline al-color-white`}>
+                         {rating.foodItem.title}
+                     </Link> - Rating: {rating.rating} / 5
+                 <br/>
+                     {rating.comment}
+                 </span>
+             </div> : <></>}
+            {showRestaurantName ?
+             <div className={"al-flex"}>
+                 <Link to={`/profile/${rating.restaurant._id}`}>
+                     <img src={rating.user.image}
+                          alt={rating.user.username}
+                          className={"al-foodItem-img "}/>
+                 </Link>
+                 <span className={"al-padding-left-small"}>
+                     <Link to={`/profile/${rating.restaurant._id}`}
+                           className={`al-no-underline al-color-white`}>
+                         {rating.restaurant.username}
+                     </Link> - Rating: {rating.rating} / 5
+                 <br/>
+                     {rating.comment}
+                 </span>
+             </div> : <></>}
         </div>
     )
 }

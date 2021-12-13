@@ -41,18 +41,20 @@ const RatingBox = ({user, restaurant, item, ratings, setRatings}) => {
 
     return (
         <>
-            <div>
-                <label>
+            <div className={"al-rating-box al-padding-small"}>
+                <label className={"al-full"}>
                     Comment:
                     <br/>
                     <textarea onChange={(e) => {
                         setComment(e.target.value)
-                    }}/>
+                    }}
+                    className={"al-comment-text"}/>
                 </label>
                 <hr/>
                 <label>
-                    Stars:
-                    <select onChange={e => {
+                    Stars
+                    <select className={"al-margin-top-small al-stars"}
+                        onChange={e => {
                         setStars(parseInt(e.target.value));
                     }}>
                         <option value="5" selected>5</option>
@@ -63,9 +65,12 @@ const RatingBox = ({user, restaurant, item, ratings, setRatings}) => {
                     </select>
                 </label>
                 <hr/>
-                <button className={"btn btn-primary"}
-                        onClick={commentClickHandler}> Comment
-                </button>
+                <div className={"al-full al-flex al-h-center"}>
+                    <button className={"btn btn-primary al-button al-margin-top-small"}
+                            onClick={commentClickHandler}> Comment
+                    </button>
+                </div>
+
             </div>
         </>
     )

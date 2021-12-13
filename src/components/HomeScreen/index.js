@@ -16,7 +16,7 @@ const HomeScreen = () => {
                     <NavigationSidebar active={"home"} user={user} setUser={setUser}/>
                 </div>
 
-                <div className={"col-10 al-allside-border"}>
+                <div className={"col-10"}>
                     <HomeScreenComponent user={user}/>
                 </div>
             </div>

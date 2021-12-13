@@ -92,6 +92,10 @@
     margin-bottom: 12px;
 }
 
+.al-margin-right-small {
+    margin-right: 12px;
+}
+
 .al-padding-large {
     padding: 24px;
 }
@@ -119,12 +123,20 @@
     display: flex;
 }
 
+.al-block {
+    display: block;
+}
+
 .al-v-center {
     align-items: center;
 }
 
 .al-h-right {
     justify-content: end;
+}
+
+.al-h-center {
+    justify-content: center;
 }
 
 .al-full {

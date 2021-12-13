@@ -34,7 +34,7 @@ const DetailsScreenComponent = ({user}) => {
     }
 
     const likeClickHandler = () => {
-        if(user._id === undefined) {
+        if (user._id === undefined) {
             navigate("/login");
         }
         const like = {
@@ -53,14 +53,15 @@ const DetailsScreenComponent = ({user}) => {
                            step={0.01}
                            value={price}
                            onChange={(e) => {
-                        setPrice(e.target.value)
-                    }}/>
+                               setPrice(e.target.value)
+                           }}/>
                     <button className={"btn btn-primary"} onClick={() => {
                         if (price <= 0 || price > 100) {
                             setInvalidPriceString("Enter the amount between 0 and 100 dollars.");
                         } else {
                             setInvalidPriceString("");
-                            addMenuItemToRestaurant(user, itemDetails, price).then(navigate("/profile"));
+                            addMenuItemToRestaurant(user, itemDetails, price)
+                                .then(navigate("/profile"));
                         }
                     }}>Add FoodItem to Menu
                     </button>
@@ -75,6 +76,8 @@ const DetailsScreenComponent = ({user}) => {
                                setRatings={setFoodRatings}/>
                 </>
             )
+        } else if (user._id === undefined) {
+
         }
         return (
             <div>
@@ -85,16 +88,26 @@ const DetailsScreenComponent = ({user}) => {
 
     return (
         <div className={"row"}>
-            <div className={"col-8"}>
-                <h1>
-                    {itemDetails.title} {getAverageOfRatings()}/5
-                </h1>
-                <div dangerouslySetInnerHTML={{__html: itemDetails.summary}}/>
-                <br/>
-                <img src={itemDetails.image} alt={itemDetails.title}/>
-                <br/>
-                <button className={"btn btn-primary"} onClick={likeClickHandler}>Like this Food</button>
-                <br/>
+            <div className={"col-8 al-allside-border"}>
+                <div
+                    className={"row al-margin-bottom-small al-padding-top-small al-padding-bottom-small al-border-bottom"}>
+                    <div className={"col-9"}>
+                        <h1 className={""}>
+                            {itemDetails.title} {getAverageOfRatings()}/5
+                        </h1>
+                    </div>
+                    <div className={"col-3 al-flex al-h-right al-v-center"}>
+                        {user.role === "customer" ? <button className={"btn btn-primary al-button"}
+                                                            onClick={likeClickHandler}>Like this
+                            Food
+                        </button> : <></>}
+                    </div>
+                </div>
+
+                <img src={itemDetails.image} alt={itemDetails.title}
+                     className={"al-details-image al-border-bottom al-padding-bottom-small"}/>
+                <div dangerouslySetInnerHTML={{__html: itemDetails.summary}}
+                     className={"al-border-bottom"}/>
                 <h2>
                     Restaurants Serving this item:
                 </h2>

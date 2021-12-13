@@ -14,6 +14,16 @@ export const loginUser = (user) => {
 }
 
 export const signupUser = (user) => {
+    let image = "/images/U.png";
+    if (user.role === "restaurant") {
+        image = "/images/R.png";
+    } else if (user.role === "waiter") {
+        image = "/images/E.png";
+    }
+    user = {
+        ...user,
+        image
+    }
     return fetch(`${SERVER_API}/signup`, {
         method: "POST",
         body: JSON.stringify(user),
