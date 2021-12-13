@@ -10,7 +10,8 @@ const SignUpScreen = () => {
                                          verifypassword: "",
                                          name: "",
                                          date: "",
-                                         role: "customer"
+                                         role: "customer",
+                                         description: ""
                                      });
 
     useEffect(() => {
@@ -22,7 +23,6 @@ const SignUpScreen = () => {
     }, [navigate])
 
     const signupClickHandler = () => {
-        console.log(user);
         if (user.username === "" || user.password === "" || user.verifypassword === "" || user.name
             === "" || user.role === "" || user.date === "") {
             alert("Enter correct details");
@@ -68,64 +68,113 @@ const SignUpScreen = () => {
     }
 
     return (
-        <div>
-            <label>
-                Username:
-                <input value={user.username}
-                       onChange={(e) => {
-                           formHandler(e.target.value, "username");
-                       }}/>
-            </label>
-            <br/>
-            <label>
-                Password:
-                <input type="password"
-                       value={user.password}
-                       onChange={(e) => {
-                           formHandler(e.target.value, "password");
-                       }}/>
-            </label>
-            <br/>
-            <label>
-                Re-enter Password:
-                <input type="password"
-                       value={user.verifypassword}
-                       onChange={(e) => {
-                           formHandler(e.target.value, "verify-password");
-                       }}/>
-            </label>
-            <br/>
-            <label>
-                Name:
-                <input
-                    value={user.name}
-                    onChange={(e) => {
-                        formHandler(e.target.value, "name");
-                    }}/>
-            </label>
-            <br/>
-            <label>
-                {user.role === "restaurant" ? <>Opening Date:</> : <>Date Of Birth:</>}
-                <input type="date"
-                       value={user.date}
-                       onChange={(e) => {
-                           formHandler(e.target.value, "date");
-                       }}/>
-            </label>
-            <br/>
-            <label>
-                Role:
-                <select value={user.role} onChange={(e) => {
-                    formHandler(e.target.value, "role");
-                }}>
-                    <option value="customer">Customer</option>
-                    <option value="restaurant">Restaurant</option>
-                    <option value="waiter">Waiter</option>
-                </select>
-            </label>
-            <br/>
-            <button className={"btn btn-primary"} onClick={signupClickHandler}>Sign-Up</button>
-            <br/>
+        <div className={"row"}>
+            <div className={"col-4"}/>
+            <div className={"col-4 al-signup"}>
+                <div className={"row"}>
+                    <div className={"col-4"}/>
+                    <div className={"col-4"}>
+                        <h1>
+                            Signup
+                        </h1>
+                    </div>
+                    <div className={"col-4"}/>
+                </div>
+                <div className={"row"}>
+                    <label className={"row al-signup-label"}>
+                        <div className={"col-6"}>
+                            Username
+                        </div>
+                        <div className={"col-6"}>
+                            <input className={"al-signup-input"}
+                                   value={user.username}
+                                   onChange={(e) => {
+                                       formHandler(e.target.value, "username");
+                                   }}/>
+                        </div>
+                    </label>
+                    <br/>
+                    <label className={"row al-signup-label"}>
+                        <div className={"col-6"}>
+                            Password
+                        </div>
+                        <div className={"col-6"}>
+                            <input type="password" className={"al-signup-input"}
+                                   value={user.password}
+                                   onChange={(e) => {
+                                       formHandler(e.target.value, "password");
+                                   }}/>
+                        </div>
+                    </label>
+                    <br/>
+                    <label className={"row al-signup-label"}>
+                        <div className={"col-6"}>
+                            Re-enter Password
+                        </div>
+                        <div className={"col-6"}>
+                            <input type="password" className={"al-signup-input"}
+                                   value={user.verifypassword}
+                                   onChange={(e) => {
+                                       formHandler(e.target.value, "verify-password");
+                                   }}/>
+                        </div>
+                    </label>
+                    <br/>
+                    <label className={"row al-signup-label"}>
+                        <div className={"col-6"}>
+                            Name
+                        </div>
+                        <div className={"col-6"}>
+                            <input className={"al-signup-input"}
+                                   value={user.name}
+                                   onChange={(e) => {
+                                       formHandler(e.target.value, "name");
+                                   }}/>
+                        </div>
+                    </label>
+                    <br/>
+                    <label className={"row al-signup-label"}>
+                        <div className={"col-6"}>
+                            {user.role === "restaurant" ? <>Opening Date</> : <>Date Of Birth</>}
+                        </div>
+                        <div className={"col-6"}>
+                            <input type="date" className={"al-signup-input"}
+                                   value={user.date}
+                                   onChange={(e) => {
+                                       formHandler(e.target.value, "date");
+                                   }}/>
+                        </div>
+                    </label>
+                    <br/>
+                    <label className={"row al-signup-label"}>
+                        <div className={"col-6"}>
+                            Role
+                        </div>
+                        <div className={"col-6"}>
+                            <select className={"al-signup-input"} value={user.role}
+                                    onChange={(e) => {
+                                        formHandler(e.target.value, "role");
+                                    }}>
+                                <option value="customer">Customer</option>
+                                <option value="restaurant">Restaurant</option>
+                                <option value="waiter">Waiter</option>
+                            </select>
+                        </div>
+                    </label>
+                    <br/>
+                    <div
+                        className={"row al-margin-top-large al-padding-left-large al-margin-bottom-small"}>
+                        <div className={"col-4"}/>
+                        <div className={"col-4"}>
+                            <button className={"btn btn-primary al-button al-full"}
+                                    onClick={signupClickHandler}>Sign-Up
+                            </button>
+                        </div>
+                        <div className={"col-4"}/>
+                    </div>
+                </div>
+            </div>
+            <div className={"col-4"}/>
         </div>
     )
 }

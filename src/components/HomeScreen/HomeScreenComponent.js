@@ -28,21 +28,27 @@ const HomeScreenComponent = ({user}) => {
 
     const getNoUserHome = () => {
         return (
-            <>
-                <button className={"btn btn-primary"} onClick={loginClickHandler}>Login</button>
-                <hr/>
-                <button className={"btn btn-primary"} onClick={signupClickHandler}>Sign-Up</button>
-                <hr/>
-            </>
+            <div className={"row"}>
+                <div className={"col-10"}>
+                </div>
+                <div className={"col-2 al-height-full"}>
+                    <button className={"btn btn-primary al-full al-button"} onClick={loginClickHandler}>Login</button>
+
+                    <button className={"btn btn-primary al-full al-button al-margin-top-large"} onClick={signupClickHandler}>Sign-Up</button>
+                </div>
+            </div>
         )
     }
 
     const getUserHome = () => {
         return (
             <>
-                <h1>
-                    Hello {user.username}
-                </h1>
+                <div className={"al-border-bottom"}>
+                    <h1 className={"col-11"}>
+                        {user.name}
+                    </h1>
+                </div>
+
                 {user.role === 'customer' ?
                  <div>
                      <h1>Latest Food Ratings By You: </h1>

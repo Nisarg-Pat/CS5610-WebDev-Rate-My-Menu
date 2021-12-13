@@ -1,9 +1,20 @@
 import React, {useEffect, useState} from "react";
-import {findMenuOfRestaurant} from "../../services/menuService";
+import {deleteMenuItem, findMenuOfRestaurant} from "../../services/menuService";
 import FoodItem from "../FoodIemComponent/FoodItem";
+import {deleteFoodLike} from "../../services/userFoodLikesService";
 
-const GetRestaurantMenu = ({restaurant}) => {
+const GetRestaurantMenu = ({restaurant, showDelete}) => {
     let [menu, setMenu] = useState([]);
+
+    const deleteItemClickHandler = (item) => {
+        const menuItem = {
+            restaurant,
+            foodItem: item
+        }
+        deleteMenuItem(menuItem)
+            .then((status) => setMenu(menu.filter((menuItem) => menuItem.foodItem !== item)))
+    }
+
     useEffect(() => {
         findMenuOfRestaurant(restaurant).then((menu) => {
             setMenu(menu);
@@ -12,7 +23,13 @@ const GetRestaurantMenu = ({restaurant}) => {
     return (
         <div>
             <div>
-                {menu.map((item) => <FoodItem foodItem={item.foodItem} price={item.price}/>)}
+                {showDelete ? menu.map((item) => <FoodItem foodItem={item.foodItem}
+                                                           role={restaurant.role}
+                                                           price={item.price}
+                                                           deleteClickHandler={deleteItemClickHandler}/>)
+                            : menu.map((item) => <FoodItem foodItem={item.foodItem}
+                                                           price={item.price}/>)
+                }
             </div>
         </div>
     )

@@ -25,10 +25,10 @@ const ProfileScreen = () => {
         <>
             <div className="row">
                 <div className={"col-2"}>
-                    <NavigationSidebar active={"home"} user={user} setUser={setUser}/>
+                    <NavigationSidebar active={"profile"} user={user} setUser={setUser}/>
                 </div>
 
-                <div className={"col-10"}>
+                <div className={"col-10 al-allside-border"}>
                     <ProfileScreenComponent user={user} profileId={profileId}/>
                 </div>
             </div>

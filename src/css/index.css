@@ -1,16 +1,133 @@
 body {
-    margin-top: 10px;
-}
+    --background-color: black;
+    --background-light: rgb(32, 35, 39);
+    --color-white: #AAAAAA;
+    --red-color: #9B111E;
+    --border-color: rgb(47, 51, 54);
 
-.al-ratingList {
+    margin-top: 12px;
+    background-color: var(--background-color);
+    color: var(--color-white);
+    font-size: 18px;
 }
 
 .al-ratingListItem {
-    margin: 10px;
-    border: 1px solid black;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
 }
 
 .al-restaurantListItem {
-    margin: 10px;
-    border: 1px solid black;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+
+.al-search-input {
+    background-color: var(--background-light);
+    padding: 12px 12px 12px 48px;
+    width: 100%;
+    border-radius: 24px;
+    border: 0;
+    color: var(--color-white)
+}
+
+.al-relative {
+    position: relative;
+}
+
+.al-search-icon {
+    z-index: 2;
+    position: absolute;
+    top:-8px;
+    padding-left: 18px;
+    font-size: 18px;
+    color: rgb(110, 118, 125);
+}
+
+.al-button {
+    background-color: var(--red-color);
+    height: 50px;
+    border: 0;
+}
+
+.al-button:hover {
+    background-color: var(--red-color);
+    font-weight: bold;
+    border: 0;
+}
+
+.al-button:focus {
+    background-color: var(--red-color);
+    height: 50px;
+    border: 0;
+}
+
+.al-foodItem {
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.al-foodItem:hover {
+    font-weight: bolder;
+}
+
+.al-foodItem-img {
+    width: 100px;
+    height: 75px;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+}
+
+/*NAVBAR*/
+.al-navbar {
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+}
+
+.al-navbar-inactive {
+    padding: 12px;
+    color: var(--color-white);
+    background-color: var(--background-light);
+}
+
+.al-navbar-inactive:hover {
+    color: var(--color-white);
+    background-color: var(--red-color);
+}
+
+.al-navbar-active {
+    padding: 12px;
+    color: var(--color-white);
+    font-weight: bold;
+    background-color: var(--red-color);
+}
+
+.al-navbar-active:hover {
+    color: var(--color-white);
+    background-color: var(--red-color);
+}
+
+/*Signup*/
+.al-signup {
+    background-color: var(--background-light);
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+}
+
+.al-signup-label {
+    padding-left: 12px;
+    padding-top:12px;
+}
+
+.al-signup-input {
+    color: var(--color-white);
+    background-color: var(--background-light);
+    border: 2px solid var(--border-color);
+}
+
+.al-signup-textArea {
+    color: var(--color-white);
+    background-color: var(--background-light);
+    border: 2px solid var(--border-color);
+    height: 200px;
 }

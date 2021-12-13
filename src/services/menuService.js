@@ -36,3 +36,14 @@ export const findRestaurantsFromItem = (item) => {
         }
     }).then((response) => response.json());
 }
+
+export const deleteMenuItem = (menuItem) => {
+    return fetch(`${SERVER_API}/menu`, {
+        method: "DELETE",
+        body : JSON.stringify(menuItem),
+        credentials : "include",
+        headers: {
+            "content-type": "application/json"
+        }
+    });
+}

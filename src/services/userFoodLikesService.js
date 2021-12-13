@@ -34,3 +34,14 @@ export const getFoodLikesByUser = (user) => {
         }
     }).then((response) => response.json());
 }
+
+export const deleteFoodLike = (foodLike) => {
+    return fetch(`${SERVER_API}/foodLike`, {
+        method: "DELETE",
+        body : JSON.stringify(foodLike),
+        credentials : "include",
+        headers: {
+            "content-type": "application/json"
+        }
+    });
+}

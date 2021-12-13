@@ -23,8 +23,19 @@ const SearchScreenComponent = ({user}) => {
     }, [searchTerm]);
     return (
         <div>
-            <input value={searchTerm} onChange={e => setSearchTerm(e.target.value)}/>
-            <button className={"btn btn-primary"} onClick={searchClickHandler}>Search</button>
+            <div className={"al-flex al-v-center al-margin-bottom-large"}>
+                <span className={"al-relative"}>
+                    <i className="fas fa-search al-search-icon"/>
+                </span>
+                <input placeholder={"eg. Burger"}
+                       value={searchTerm}
+                       title={"Search Input"}
+                       onChange={e => setSearchTerm(e.target.value)}
+                       className={"al-search-input"}/>
+                <button className={"btn btn-primary al-button al-margin-left-medium"}
+                        title={"Search Button"} onClick={searchClickHandler}>Search
+                </button>
+            </div>
             <FoodItemList items={foodItems}/>
         </div>
     )

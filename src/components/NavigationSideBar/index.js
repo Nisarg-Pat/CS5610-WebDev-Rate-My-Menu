@@ -19,24 +19,32 @@ const NavigationSidebar = ({
 
     return (
         <>
-            <div className="list-group">
-                <Link to="/home" className={"list-group-item list-group-item-action"}>
+            <div className="list-group al-navbar">
+                <Link to="/home"
+                      className={`list-group-item list-group-item-action ${active === "home" ?"al-navbar-active" : "al-navbar-inactive"}`}>
                     Home
                 </Link>
                 {
                     user._id !== undefined ?
-                    <Link to="/profile" className={"list-group-item list-group-item-action"}>
+                    <Link to="/profile"
+                          className={`list-group-item list-group-item-action ${active === "profile" ?"al-navbar-active" : "al-navbar-inactive"}`}>
                         Profile
                     </Link> :
                     <></>
                 }
 
-                <Link to="/search" className={"list-group-item list-group-item-action"}>
+                <Link to="/search"
+                      className={`list-group-item list-group-item-action ${active === "search" ?"al-navbar-active" : "al-navbar-inactive"}`}>
                     Search
                 </Link>
+
+
                 {
-                    user._id !== undefined ? <button
-                        onClick={logoutClickHandler}>Logout</button> : <></>
+                    user._id !== undefined ?
+                    <div onClick={logoutClickHandler}
+                         className={"list-group-item list-group-item-action al-navbar-inactive"}>
+                        Logout
+                    </div> : <></>
                 }
             </div>
         </>

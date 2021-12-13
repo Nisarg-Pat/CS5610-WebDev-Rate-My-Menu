@@ -8,11 +8,11 @@ const UserRatingItem = ({
                             showRestaurantName = false
                         }) => {
     return (
-        <div className={"al-ratingListItem"}>
-            {showUsername ? <Link to={`/profile/${rating.user._id}`}>{rating.user.username}</Link> : <></>}
+        <div className={"al-ratingListItem al-margin-bottom-small al-padding-small"}>
+            {showUsername ? <Link to={`/profile/${rating.user._id}`} className={``}>{rating.user.username}</Link> : <></>}
             {showFoodTitle ? <Link to={`/details/${rating.foodItem.id}`}>{rating.foodItem.title}</Link> : <></>}
             {showRestaurantName ? <Link to={`/profile/${rating.restaurant._id}`}>{rating.restaurant.username}</Link> : <></>}
-            : {rating.rating} / 5
+            - Rating: {rating.rating} / 5
             <br/>
             {rating.comment}
             <br/>

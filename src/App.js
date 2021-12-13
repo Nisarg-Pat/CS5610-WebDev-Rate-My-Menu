@@ -6,6 +6,7 @@ import ProfileScreen from "./components/ProfileScreen";
 import SignUpScreen from "./components/SignUpScreen";
 import SearchScreen from "./components/SearchScreen";
 import DetailsScreen from "./components/DetailsScreen";
+import EditProfileScreen from "./components/EditProfileScreen";
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                     <Route path={"/search"} element={<SearchScreen/>}/>
                     <Route path={"/search/:searchTerm"} element={<SearchScreen/>}/>
                     <Route path={"/details/:id"} element={<DetailsScreen/>}/>
+                    <Route path={"/edit_profile"} element={<EditProfileScreen/>}/>
                 </Routes>
             </div>
         </BrowserRouter>

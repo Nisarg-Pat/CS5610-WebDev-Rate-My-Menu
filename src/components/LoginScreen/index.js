@@ -42,20 +42,56 @@ const LoginScreen = () => {
     }
 
     return (
-        <div>
-            <label>
-                Username:
-                <input value={user.username} onChange={(e) => {
-                    formHandler(e.target.value, "username");
-                }}/>
-            </label>
-            <label>
-                Password:
-                <input type="password" value={user.password} onChange={(e) => {
-                    formHandler(e.target.value, "password");
-                }}/>
-            </label>
-            <button className={"btn btn-primary"} onClick={loginClickHandler}>Login</button>
+        <div className={"row"}>
+            <div className={"col-4"}/>
+            <div className={"col-4 al-signup"}>
+                <div className={"row"}>
+                    <div className={"col-4"}/>
+                    <div className={"col-4"}>
+                        <h1>
+                            Login
+                        </h1>
+                    </div>
+                    <div className={"col-4"}/>
+                </div>
+                <div className={"row"}>
+                    <label className={"row al-signup-label"}>
+                        <div className={"col-6"}>
+                            Username
+                        </div>
+                        <div className={"col-6"}>
+                            <input className={"al-signup-input"}
+                                   value={user.username}
+                                   onChange={(e) => {
+                                       formHandler(e.target.value, "username");
+                                   }}/>
+                        </div>
+                    </label>
+                    <br/>
+                    <label className={"row al-signup-label"}>
+                        <div className={"col-6"}>
+                            Password
+                        </div>
+                        <div className={"col-6"}>
+                            <input type="password" className={"al-signup-input"}
+                                   value={user.password}
+                                   onChange={(e) => {
+                                       formHandler(e.target.value, "password");
+                                   }}/>
+                        </div>
+                    </label>
+                    <br/>
+                    <div className={"row al-margin-top-large al-padding-left-large al-margin-bottom-small"}>
+                        <div className={"col-4"}/>
+                        <div className={"col-4"}>
+                            <button className={"btn btn-primary al-button al-full"}
+                                    onClick={loginClickHandler}>Login
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className={"col-4"}/>
         </div>
     )
 }

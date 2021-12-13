@@ -54,3 +54,14 @@ export const findProfileById = (_id) => {
         }
     }).then((response) => response.json());
 }
+
+export const editUser = (user) => {
+    return fetch(`${SERVER_API}/signup`, {
+        method: "PUT",
+        body: JSON.stringify(user),
+        credentials: "include",
+        headers: {
+            "content-type": "application/json"
+        }
+    });
+}
