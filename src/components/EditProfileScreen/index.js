@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
-import {deleteUser, editUser, getProfile, signupUser} from "../../services/userService";
+import {useNavigate} from "react-router-dom";
+import {deleteUser, editUser, getProfile} from "../../services/userService";
 
 const EditProfileScreen = () => {
     const navigate = useNavigate();

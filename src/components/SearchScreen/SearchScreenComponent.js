@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {searchFoodItems} from "../../services/foodItemService";
-import FoodItem from "../FoodIemComponent/FoodItem";
 import FoodItemList from "../FoodIemComponent/FoodItemList";
 
 const SearchScreenComponent = ({user}) => {

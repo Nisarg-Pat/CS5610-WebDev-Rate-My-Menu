@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from "react";
-import {findRestaurantsFromItem} from "../../services/menuService";
+import React from "react";
 import UserItem from "./UserItem";
 
 const GetRestaurantsFromItem = ({restaurants}) => {

@@ -4,7 +4,7 @@ import {getRatingsOfRestaurant} from "../../services/userRestaurantRatingService
 import RatingBox from "../RatingComponent/RatingBox";
 import UserRatingList from "../RatingComponent/UserRatingList";
 import FoodItem from "../FoodIemComponent/FoodItem";
-import {addFoodLike, getFoodLikesByUser} from "../../services/userFoodLikesService";
+import {getFoodLikesByUser} from "../../services/userFoodLikesService";
 import {Link, useNavigate} from "react-router-dom";
 import {
     addRestaurantLike, findRestaurantLike,

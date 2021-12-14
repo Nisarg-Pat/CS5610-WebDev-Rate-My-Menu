@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {getFoodRatingsByUser,} from "../../services/userFoodRatingService";
 import UserRatingList from "../RatingComponent/UserRatingList";
 import {
@@ -11,8 +11,6 @@ import {getEmployeesListByRestaurantId, getUsersList} from "../../services/userS
 import UserItem from "../RestaurantComponent/UserItem";
 
 const HomeScreenComponent = ({user}) => {
-
-    const navigate = useNavigate();
 
     let [foodRatings, setFoodRatings] = useState([]);
     let [restaurantRatings, setRestaurantRatings] = useState([]);

@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {deleteMenuItem, findMenuOfRestaurant} from "../../services/menuService";
 import FoodItem from "../FoodIemComponent/FoodItem";
-import {deleteFoodLike} from "../../services/userFoodLikesService";
 
 const GetRestaurantMenu = ({restaurant, showDelete}) => {
     let [menu, setMenu] = useState([]);

@@ -8,10 +8,9 @@ import {
     getRestaurantLikesByUser
 } from "../../services/userRestaurantLikesService";
 import UserRatingList from "../RatingComponent/UserRatingList";
-import RatingBox from "../RatingComponent/RatingBox";
 import UserItem from "../RestaurantComponent/UserItem";
 import {Link, useNavigate} from "react-router-dom";
-import {findProfileById, getProfile} from "../../services/userService";
+import {findProfileById} from "../../services/userService";
 
 const GetDetailsOfOwnProfile = ({user}) => {
     const navigate = useNavigate();

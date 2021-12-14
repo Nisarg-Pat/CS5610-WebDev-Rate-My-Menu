@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {getFoodItemFromId} from "../../services/foodItemService";
-import {addMenuItemToRestaurant, findRestaurantsFromItem} from "../../services/menuService";
+import {findRestaurantsFromItem} from "../../services/menuService";
 import GetRestaurantsFromItem from "../RestaurantComponent/GetRestaurantsFromItem";
 import {getRatingsOfFoodItem} from "../../services/userFoodRatingService";
 import RatingBox from "../RatingComponent/RatingBox";
 import UserRatingList from "../RatingComponent/UserRatingList";
-import {addFoodLike, deleteFoodLike, findFoodLike} from "../../services/userFoodLikesService";
+import {addFoodLike, findFoodLike} from "../../services/userFoodLikesService";
 import AddFoodItemBox from "../RestaurantComponent/AddFoodItemBox";
 
 const DetailsScreenComponent = ({user}) => {
