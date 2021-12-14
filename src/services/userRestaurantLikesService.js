@@ -45,3 +45,14 @@ export const deleteRestaurantLike = (restaurantLike) => {
         }
     });
 }
+
+export const findRestaurantLike = (like) => {
+    return fetch(`${SERVER_API}/findRestaurantLike`, {
+        method: "POST",
+        body : JSON.stringify(like),
+        credentials : "include",
+        headers: {
+            "content-type": "application/json"
+        }
+    }).then()
+}

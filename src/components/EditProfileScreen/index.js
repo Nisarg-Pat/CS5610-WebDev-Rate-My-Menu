@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import {editUser, getProfile, signupUser} from "../../services/userService";
+import {deleteUser, editUser, getProfile, signupUser} from "../../services/userService";
 
 const EditProfileScreen = () => {
     const navigate = useNavigate();
@@ -18,13 +18,33 @@ const EditProfileScreen = () => {
     }, [navigate])
 
     const editProfileClickHandler = () => {
-        if (user.name === "" || user.date === "") {
+        if (user.name === "" || user.date === "" || user.email === "") {
             alert("Enter correct details");
             return;
+        }
+        let email = user.email.split("@");
+        if (email.length !== 2) {
+            alert("Email not valid");
+            return;
+        } else {
+            let others = email[1].split(".");
+            if (others.length !== 2 || others[0] === '' || others[1] === '' || email[0] === ''
+                || email[1] === '') {
+                alert("Email not valid");
+                return;
+            }
         }
         editUser(user).then((response) => {
             navigate("/profile");
         });
+    }
+
+    const deleteClickHandler = () => {
+        if (window.confirm('Do you really want to delete the profile?')) {
+            deleteUser(user).then(() => {
+                navigate("/home");
+            })
+        }
     }
 
     const formHandler = (change, inputType) => {
@@ -37,6 +57,15 @@ const EditProfileScreen = () => {
                 break;
             case "description":
                 setUser({...user, description: change});
+                break;
+            case "waiterRestaurantId":
+                setUser({...user, waiterRestaurantId: change});
+                break;
+            case "email":
+                setUser({...user, email: change});
+                break;
+            case "address":
+                setUser({...user, address: change});
                 break;
             default:
                 break;
@@ -72,6 +101,20 @@ const EditProfileScreen = () => {
                     <br/>
                     <label className={"row al-signup-label"}>
                         <div className={"col-6"}>
+                            Email
+                        </div>
+                        <div className={"col-6"}>
+                            <input className={"al-signup-input"}
+                                   type={"email"}
+                                   value={user.email}
+                                   onChange={(e) => {
+                                       formHandler(e.target.value, "email");
+                                   }}/>
+                        </div>
+                    </label>
+                    <br/>
+                    <label className={"row al-signup-label"}>
+                        <div className={"col-6"}>
                             {user.role === "restaurant" ? <>Opening Date</> : <>Date Of Birth</>}
                         </div>
                         <div className={"col-6"}>
@@ -95,15 +138,40 @@ const EditProfileScreen = () => {
                         </div>
                     </label>
                     <br/>
+                    {user.role === "restaurant" ?
+                     <>
+                         <label className={"row al-signup-label"}>
+                             <div className={"col-6"}>
+                                 Address
+                             </div>
+                             <div className={"col-6"}>
+                                 <textarea className={"al-signup-input"}
+                                           onChange={(e) => {
+                                               formHandler(e.target.value, "address");
+                                           }}>{user.address}</textarea>
+                             </div>
+                         </label>
+                         <br/>
+                     </> : <></>}
                     <div
                         className={"row al-margin-top-large al-padding-left-large al-margin-bottom-small"}>
-                        <div className={"col-4"}/>
-                        <div className={"col-4"}>
+                        <div className={"col-3"}/>
+                        <div className={"col-6"}>
                             <button className={"btn btn-primary al-button al-full"}
                                     onClick={editProfileClickHandler}>Edit
                             </button>
                         </div>
-                        <div className={"col-4"}/>
+                        <div className={"col-3"}/>
+                    </div>
+                    <div
+                        className={"row al-padding-left-large al-margin-bottom-small"}>
+                        <div className={"col-3"}/>
+                        <div className={"col-6"}>
+                            <button className={"btn btn-primary al-button al-full"}
+                                    onClick={deleteClickHandler}>Delete Profile
+                            </button>
+                        </div>
+                        <div className={"col-3"}/>
                     </div>
                 </div>
             </div>

@@ -66,7 +66,7 @@ export const findProfileById = (_id) => {
 }
 
 export const editUser = (user) => {
-    return fetch(`${SERVER_API}/signup`, {
+    return fetch(`${SERVER_API}/profile`, {
         method: "PUT",
         body: JSON.stringify(user),
         credentials: "include",
@@ -74,4 +74,35 @@ export const editUser = (user) => {
             "content-type": "application/json"
         }
     });
+}
+
+export const deleteUser = (user) => {
+    return fetch(`${SERVER_API}/profile`, {
+        method: "DELETE",
+        body: JSON.stringify(user),
+        credentials: "include",
+        headers: {
+            "content-type": "application/json"
+        }
+    });
+}
+
+export const getEmployeesListByRestaurantId = (_id) => {
+    return fetch(`${SERVER_API}/employeeList`, {
+        method: "POST",
+        body: JSON.stringify({_id}),
+        credentials: "include",
+        headers: {
+            "content-type": "application/json"
+        }
+    }).then((response) => response.json());
+}
+
+export const getUsersList = () => {
+    return fetch(`${SERVER_API}/profile`, {
+        credentials: "include",
+        headers: {
+            "content-type": "application/json"
+        }
+    }).then((response) => response.json());
 }

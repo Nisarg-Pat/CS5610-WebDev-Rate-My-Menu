@@ -11,7 +11,8 @@ const SignUpScreen = () => {
                                          name: "",
                                          date: "",
                                          role: "customer",
-                                         description: ""
+                                         description: "",
+                                         email: ""
                                      });
 
     useEffect(() => {
@@ -24,7 +25,7 @@ const SignUpScreen = () => {
 
     const signupClickHandler = () => {
         if (user.username === "" || user.password === "" || user.verifypassword === "" || user.name
-            === "" || user.role === "" || user.date === "") {
+            === "" || user.role === "" || user.date === "" || user.email === "") {
             alert("Enter correct details");
             return;
         }
@@ -32,10 +33,23 @@ const SignUpScreen = () => {
             alert("Passwords dont match");
             return;
         }
-
+        let email = user.email.split("@");
+        if (email.length !== 2) {
+            alert("Email not valid");
+            return;
+        } else {
+            let others = email[1].split(".");
+            if (others.length !== 2 || others[0] === '' || others[1] === '' || email[0] === ''
+                || email[1] === '') {
+                alert("Email not valid");
+                return;
+            }
+        }
         signupUser(user).then((response) => {
             if (response.status === 403) {
                 alert("Username is already taken");
+            } else if (response.status === 404) {
+                alert("Restaurant ID not valid");
             } else {
                 navigate("/profile");
             }
@@ -61,6 +75,15 @@ const SignUpScreen = () => {
                 break;
             case "name":
                 setUser({...user, name: change});
+                break;
+            case "waiterRestaurantId":
+                setUser({...user, waiterRestaurantId: change});
+                break;
+            case "email":
+                setUser({...user, email: change});
+                break;
+            case "address":
+                setUser({...user, address: change});
                 break;
             default:
                 break;
@@ -125,11 +148,42 @@ const SignUpScreen = () => {
                             Name
                         </div>
                         <div className={"col-6"}>
+                            <input
+                                className={"al-signup-input"}
+                                value={user.name}
+                                onChange={(e) => {
+                                    formHandler(e.target.value, "name");
+                                }}/>
+                        </div>
+                    </label>
+                    <br/>
+                    <label className={"row al-signup-label"}>
+                        <div className={"col-6"}>
+                            Email
+                        </div>
+                        <div className={"col-6"}>
                             <input className={"al-signup-input"}
-                                   value={user.name}
+                                   type={"email"}
+                                   value={user.email}
                                    onChange={(e) => {
-                                       formHandler(e.target.value, "name");
+                                       formHandler(e.target.value, "email");
                                    }}/>
+                        </div>
+                    </label>
+                    <br/>
+                    <label className={"row al-signup-label"}>
+                        <div className={"col-6"}>
+                            Role
+                        </div>
+                        <div className={"col-6"}>
+                            <select className={"al-signup-input"} value={user.role}
+                                    onChange={(e) => {
+                                        formHandler(e.target.value, "role");
+                                    }}>
+                                <option value="customer">Customer</option>
+                                <option value="restaurant">Restaurant</option>
+                                <option value="waiter">Employee</option>
+                            </select>
                         </div>
                     </label>
                     <br/>
@@ -146,22 +200,38 @@ const SignUpScreen = () => {
                         </div>
                     </label>
                     <br/>
-                    <label className={"row al-signup-label"}>
-                        <div className={"col-6"}>
-                            Role
-                        </div>
-                        <div className={"col-6"}>
-                            <select className={"al-signup-input"} value={user.role}
-                                    onChange={(e) => {
-                                        formHandler(e.target.value, "role");
-                                    }}>
-                                <option value="customer">Customer</option>
-                                <option value="restaurant">Restaurant</option>
-                                <option value="waiter">Waiter</option>
-                            </select>
-                        </div>
-                    </label>
-                    <br/>
+                    {user.role === "waiter" ?
+                     <>
+                         <label className={"row al-signup-label"}>
+                             <div className={"col-6"}>
+                                 Restaurant Id
+                             </div>
+                             <div className={"col-6"}>
+                                 <input type="text" className={"al-signup-input"}
+                                        value={user.waiterRestaurantId}
+                                        onChange={(e) => {
+                                            formHandler(e.target.value, "waiterRestaurantId");
+                                        }}/>
+                             </div>
+                         </label>
+                         <br/>
+                     </> : <></>}
+                    {user.role === "restaurant" ?
+                     <>
+                         <label className={"row al-signup-label"}>
+                             <div className={"col-6"}>
+                                 Address
+                             </div>
+                             <div className={"col-6"}>
+                                 <textarea className={"al-signup-input"}
+                                        onChange={(e) => {
+                                            formHandler(e.target.value, "address");
+                                        }}>{user.address}</textarea>
+                             </div>
+                         </label>
+                         <br/>
+                     </> : <></>}
+
                     <div
                         className={"row al-margin-top-large al-padding-left-large al-margin-bottom-small"}>
                         <div className={"col-4"}/>

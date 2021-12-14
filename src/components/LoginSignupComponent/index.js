@@ -11,7 +11,7 @@ const LoginSignupComponent = () => {
         navigate("/signup");
     }
     return (
-        <div className={"al-height-full al-login-signup"}>
+        <div className={"al-login-signup"}>
             <button className={"btn btn-primary al-full al-button"}
                     onClick={loginClickHandler}>Login
             </button>

@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {getFoodItemFromId} from "../../services/foodItemService";
-import {addMenuItemToRestaurant} from "../../services/menuService";
+import {addMenuItemToRestaurant, findRestaurantsFromItem} from "../../services/menuService";
 import GetRestaurantsFromItem from "../RestaurantComponent/GetRestaurantsFromItem";
 import {getRatingsOfFoodItem} from "../../services/userFoodRatingService";
 import RatingBox from "../RatingComponent/RatingBox";
 import UserRatingList from "../RatingComponent/UserRatingList";
-import {addFoodLike} from "../../services/userFoodLikesService";
+import {addFoodLike, deleteFoodLike, findFoodLike} from "../../services/userFoodLikesService";
+import AddFoodItemBox from "../RestaurantComponent/AddFoodItemBox";
 
 const DetailsScreenComponent = ({user}) => {
     const navigate = useNavigate();
@@ -14,15 +15,24 @@ const DetailsScreenComponent = ({user}) => {
 
     let [itemDetails, setItemDetails] = useState({});
     let [foodRatings, setFoodRatings] = useState([]);
-    let [price, setPrice] = useState(0.0);
-    let [invalidPriceString, setInvalidPriceString] = useState("");
+    let [restaurants, setRestaurants] = useState([]);
+
+    let [liked, setLiked] = useState(false);
 
     useEffect(() => {
         getFoodItemFromId(params.id).then((result) => {
             setItemDetails(result)
             getRatingsOfFoodItem(itemDetails).then((ratings) => setFoodRatings(ratings));
+            if(user.role === "customer" || user.role === "waiter") {
+                findFoodLike({user, foodItem: itemDetails}).then((response) => {
+                    if (response.status === 200) {
+                        setLiked(true);
+                    }
+                })
+            }
         });
-    }, [params.id, itemDetails]);
+        findRestaurantsFromItem(itemDetails).then((restaurants) => setRestaurants(restaurants));
+    }, [user, params.id, itemDetails]);
 
     const getAverageOfRatings = () => {
         const ratings = foodRatings.map((rating) => rating.rating);
@@ -30,7 +40,12 @@ const DetailsScreenComponent = ({user}) => {
         for (let i = 0; i < ratings.length; i++) {
             totalRatings += ratings[i];
         }
-        return (totalRatings / ratings.length).toFixed(2);
+        if(ratings.length > 0) {
+            return (totalRatings / ratings.length).toFixed(2);
+        } else {
+            return "__"
+        }
+
     }
 
     const likeClickHandler = () => {
@@ -48,28 +63,11 @@ const DetailsScreenComponent = ({user}) => {
     const getRoleSpecificDiv = (user) => {
         if (user.role === "restaurant") {
             return (
-                <div>
-                    <input type={"number"}
-                           step={0.01}
-                           value={price}
-                           onChange={(e) => {
-                               setPrice(e.target.value)
-                           }}/>
-                    <button className={"btn btn-primary"} onClick={() => {
-                        if (price <= 0 || price > 100) {
-                            setInvalidPriceString("Enter the amount between 0 and 100 dollars.");
-                        } else {
-                            setInvalidPriceString("");
-                            addMenuItemToRestaurant(user, itemDetails, price)
-                                .then(navigate("/profile"));
-                        }
-                    }}>Add FoodItem to Menu
-                    </button>
-                    <br/>
-                    {invalidPriceString}
-                </div>
+                <>
+                    <AddFoodItemBox restaurant={user} itemDetails={itemDetails}/>
+                </>
             )
-        } else if (user.role === "customer") {
+        } else if (user.role === "customer" || user.role === "waiter") {
             return (
                 <>
                     <RatingBox user={user} item={itemDetails} ratings={foodRatings}
@@ -97,9 +95,9 @@ const DetailsScreenComponent = ({user}) => {
                         </h1>
                     </div>
                     <div className={"col-3 al-flex al-h-right al-v-center"}>
-                        {user.role === "customer" ? <button className={"btn btn-primary al-button"}
-                                                            onClick={likeClickHandler}>Like this
-                            Food
+                        {(user.role === "customer" || user.role === "waiter") && !liked ? <button
+                            className={"btn btn-primary al-button"}
+                            onClick={likeClickHandler}> Like this food
                         </button> : <></>}
                     </div>
                 </div>
@@ -108,12 +106,14 @@ const DetailsScreenComponent = ({user}) => {
                      className={"al-details-image al-border-bottom al-padding-bottom-small"}/>
                 <div dangerouslySetInnerHTML={{__html: itemDetails.summary}}
                      className={"al-border-bottom"}/>
+                <div className={"al-border-bottom"}>
+                    <h2>
+                        Restaurants Serving this item: ({restaurants.length})
+                    </h2>
+                    <GetRestaurantsFromItem restaurants={restaurants}/>
+                </div>
                 <h2>
-                    Restaurants Serving this item:
-                </h2>
-                <GetRestaurantsFromItem item={itemDetails}/>
-                <h2>
-                    Ratings by Users:
+                    Ratings by Users: ({foodRatings.length})
                 </h2>
                 <UserRatingList ratings={foodRatings} showUsername={true}/>
             </div>

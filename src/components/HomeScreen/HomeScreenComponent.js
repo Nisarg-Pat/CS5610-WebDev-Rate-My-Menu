@@ -1,9 +1,14 @@
 import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {getFoodRatingsByUser,} from "../../services/userFoodRatingService";
 import UserRatingList from "../RatingComponent/UserRatingList";
-import {getRestaurantRatingsByUser} from "../../services/userRestaurantRatingService";
+import {
+    getRatingsOfRestaurant,
+    getRestaurantRatingsByUser
+} from "../../services/userRestaurantRatingService";
 import LoginSignupComponent from "../LoginSignupComponent";
+import {getEmployeesListByRestaurantId, getUsersList} from "../../services/userService";
+import UserItem from "../RestaurantComponent/UserItem";
 
 const HomeScreenComponent = ({user}) => {
 
@@ -12,11 +17,25 @@ const HomeScreenComponent = ({user}) => {
     let [foodRatings, setFoodRatings] = useState([]);
     let [restaurantRatings, setRestaurantRatings] = useState([]);
     let [active, setActive] = useState("foodItem");
+    let [employees, setEmployees] = useState([]);
+    let [users, setUsers] = useState([]);
 
     useEffect(() => {
-        if (user._id !== undefined) {
+        if (user.role === "customer") {
             getFoodRatingsByUser(user).then((ratings) => setFoodRatings(ratings));
             getRestaurantRatingsByUser(user).then((ratings) => setRestaurantRatings(ratings));
+        } else if (user.role === "waiter") {
+            getFoodRatingsByUser(user).then((ratings) => setFoodRatings(ratings));
+            getRestaurantRatingsByUser(user).then((ratings) => setRestaurantRatings(ratings));
+            getEmployeesListByRestaurantId(user.waiterRestaurantId)
+                .then((employees) => setEmployees(employees))
+        } else if (user.role === "restaurant") {
+            getRatingsOfRestaurant(user).then((ratings) => setRestaurantRatings(ratings));
+            getEmployeesListByRestaurantId(user._id)
+                .then((employees) => setEmployees(employees))
+            setActive("restaurant")
+        } else {
+            getUsersList().then(users => setUsers(users))
         }
     }, [user]);
 
@@ -24,6 +43,30 @@ const HomeScreenComponent = ({user}) => {
         return (
             <div className={"row"}>
                 <div className={"col-10 al-allside-border"}>
+                    <div className={"row al-border-bottom al-padding-small"}>
+                        Welcome to Food and Restaurant Review systems! You can Search for Food items and restaurants without logging in. You can login to help improve the community.
+                    </div>
+                    <div className={"row al-border-bottom"}>
+                        <h1>
+                            New Restaurants
+                        </h1>
+                            {users.filter((user)=>user.role === "restaurant").slice(0, 5).map(
+                                (user) => <Link to={`/profile/${user._id}`} className={"col-6 al-color-white al-no-underline"}><UserItem restaurant={user}/></Link>)}
+                    </div>
+                    <div className={"row al-border-bottom"}>
+                        <h1>
+                            New Customers
+                        </h1>
+                        {users.filter((user)=>user.role === "customer").slice(0, 5).map(
+                            (user) => <Link to={`/profile/${user._id}`} className={"col-6 al-color-white al-no-underline"}><UserItem restaurant={user}/></Link>)}
+                    </div>
+                    <div className={"row"}>
+                        <h1>
+                            New Employees
+                        </h1>
+                        {users.filter((user)=>user.role === "waiter").slice(0, 5).map(
+                            (user) => <Link to={`/profile/${user._id}`} className={"col-6 al-color-white al-no-underline"}><UserItem restaurant={user}/></Link>)}
+                    </div>
                 </div>
                 <div className={"col-2"}>
                     <LoginSignupComponent/>
@@ -40,29 +83,53 @@ const HomeScreenComponent = ({user}) => {
                         {user.name}
                     </h1>
                 </div>
-                {user.role === 'customer' ?
-                 <div>
-                     <ul className="nav nav-tabs wd-nav al-border-bottom al-font-big">
-                         <li className={`nav-item al-padding-small ${active === "foodItem" ? "al-navbar-active" : ""}`}
-                             onClick={() => setActive("foodItem")}>
-                             Food Ratings
-                         </li>
-                         <li className={`nav-item al-padding-small ${active === "restaurant" ? "al-navbar-active" : ""}`}
-                             onClick={() => setActive("restaurant")}>
-                             Restaurant Ratings
-                         </li>
-                     </ul>
-                     <div className={"al-padding-top-small"}>
-                         {active === "foodItem" ? <UserRatingList ratings={foodRatings}
-                                                                  showFoodTitle={true}/> : <></>}
-                         {active === "restaurant" ? <UserRatingList ratings={restaurantRatings}
-                                                                    showRestaurantName={true}/>
-                                                  : <></>}
-                     </div>
+                <div>
+                    <div className={"al-border-bottom"}>
+                        <ul className="nav nav-tabs al-nav al-font-big">
+                            {user.role === 'customer' || user.role === "waiter" ?
+                             <li className={`nav-item al-padding-small al-margin-small al-pointer ${active
+                                                                                                    === "foodItem"
+                                                                                                    ? "al-navbar-active"
+                                                                                                    : ""}`}
+                                 onClick={() => setActive("foodItem")}>
+                                 Food Ratings
+                             </li> : <></>}
+                            {user.role === 'waiter' || user.role === "restaurant" || user.role
+                             === "customer" ?
+                             <li className={`nav-item al-padding-small al-margin-small al-pointer ${active
+                                                                                                    === "restaurant"
+                                                                                                    ? "al-navbar-active"
+                                                                                                    : ""}`}
+                                 onClick={() => setActive("restaurant")}>
+                                 Restaurant Ratings
+                             </li> : <></>}
+                            {user.role === 'waiter' || user.role === "restaurant" ?
+                             <li className={`nav-item al-padding-small al-margin-small al-pointer ${active
+                                                                                                    === "employees"
+                                                                                                    ? "al-navbar-active"
+                                                                                                    : ""}`}
+                                 onClick={() => setActive("employees")}>
+                                 Employees List
+                             </li> : <></>}
+                        </ul>
+                    </div>
 
-                 </div> :
-                 <></>
-                }
+                    <div className={"al-padding-top-small"}>
+                        {active === "foodItem" ? <UserRatingList ratings={foodRatings}
+                                                                 showFoodTitle={true}/> : <></>}
+                        {active === "restaurant" ? <UserRatingList ratings={restaurantRatings}
+                                                                   showRestaurantName={user.role
+                                                                                       !== "restaurant"}
+                                                                   showUsername={user.role
+                                                                                 === "restaurant"}/>
+                                                 : <></>}
+                        {active === "employees" ? <div>
+                                                    {employees.map(
+                                                        (employee) => <UserItem restaurant={employee}/>)}
+                                                </div>
+                                                : <></>}
+                    </div>
+                </div>
             </div>
         )
     }

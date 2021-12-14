@@ -13,11 +13,10 @@ const FoodItem = ({foodItem, price, role, deleteClickHandler}) => {
                              alt={foodItem.title}
                              className={"al-foodItem-img"}/>
                         <span className={"al-font-large al-padding-left-medium al-color-white"}>{foodItem.title} {price !== undefined ? <>: ${price}</> : <></>}</span>
-
                     </Link>
                 </div>
                 <div className={"col-2 al-flex al-v-center al-h-right"}>
-                    {role === "customer" ?
+                    {role === "customer" || role === "waiter" ?
                      <button className={"btn btn-primary al-button"} onClick={() => deleteClickHandler(foodItem)}>
                          Unlike
                      </button> :

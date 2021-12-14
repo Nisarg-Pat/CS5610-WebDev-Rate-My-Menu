@@ -9,8 +9,9 @@ import {
 } from "../../services/userRestaurantLikesService";
 import UserRatingList from "../RatingComponent/UserRatingList";
 import RatingBox from "../RatingComponent/RatingBox";
-import RestaurantItem from "../RestaurantComponent/RestaurantItem";
-import {useNavigate} from "react-router-dom";
+import UserItem from "../RestaurantComponent/UserItem";
+import {Link, useNavigate} from "react-router-dom";
+import {findProfileById, getProfile} from "../../services/userService";
 
 const GetDetailsOfOwnProfile = ({user}) => {
     const navigate = useNavigate();
@@ -18,9 +19,20 @@ const GetDetailsOfOwnProfile = ({user}) => {
     let [restaurantRatings, setRestaurantRatings] = useState([]);
     const [foodLikes, setFoodLikes] = useState([]);
     const [restaurantLikes, setRestaurantLikes] = useState([]);
+    const [workingAt, setWorkingAt] = useState([]);
+
+    const getDateString = (date) => {
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+                            "July", "August", "September", "October", "November", "December"];
+        const dateObj = new Date(date);
+        const month = monthNames[dateObj.getMonth()];
+        const day = String(dateObj.getDate() + 1);
+        const year = dateObj.getFullYear();
+        return month + '\n' + day + ',' + year;
+    }
 
     const deleteItemClickHandler = (item) => {
-        if (user.role === "customer") {
+        if (user.role === "customer" || user.role === "waiter") {
             const like = {
                 user,
                 foodItem: item
@@ -31,7 +43,7 @@ const GetDetailsOfOwnProfile = ({user}) => {
     }
 
     const deleteRestaurantClickHandler = (restaurant) => {
-        if (user.role === "customer") {
+        if (user.role === "customer" || user.role === "waiter") {
             const like = {
                 user,
                 restaurant,
@@ -47,49 +59,85 @@ const GetDetailsOfOwnProfile = ({user}) => {
         } else if (user.role === "customer") {
             getFoodLikesByUser(user).then((likes) => setFoodLikes(likes));
             getRestaurantLikesByUser(user).then((likes) => setRestaurantLikes(likes));
+        } else if (user.role === "waiter") {
+            getFoodLikesByUser(user).then((likes) => setFoodLikes(likes));
+            getRestaurantLikesByUser(user).then((likes) => setRestaurantLikes(likes));
+            findProfileById(user.waiterRestaurantId).then((restaurant) => setWorkingAt(restaurant));
         }
+        console.log(user)
     }, [user])
 
     const getRoleSpecificDiv = () => {
         if (user.role === "restaurant") {
             return (
                 <div className={"row"}>
-                        <div className={"al-border-bottom"}>
-                            <h2>
-                                Menu:
-                            </h2>
-                            <GetRestaurantMenu restaurant={user} showDelete={true}
-                                               deleteClickHandler={deleteItemClickHandler}/>
-                        </div>
+                    <div className={"col-12 al-border-bottom"}>
+                        <h2>
+                            Menu:
+                        </h2>
+                        <GetRestaurantMenu restaurant={user} showDelete={true}
+                                           deleteClickHandler={deleteItemClickHandler}/>
+                    </div>
+                    <div>
                         <h2>
                             Ratings by users:
                         </h2>
                         <UserRatingList ratings={restaurantRatings} showUsername={true}/>
+                    </div>
                 </div>
             )
         } else if (user.role === "customer") {
             return (
                 <div className={"row"}>
-                    <div className={"al-border-bottom"}>
-                        {user.description === "" || user.description === undefined ? <>Edit profile
-                                                                                       to enter description</>
-                                                                                   : <>{user.description}</>}
-                        <br/>
-                        Birth Date: {user.date.substring(0, 10)}
+                    <div className={"col-6"}>
+                        <h2>
+                            Liked Food:
+                        </h2>
+                        <div>
+                            {foodLikes.map(
+                                (like) => <FoodItem foodItem={like.foodItem} role={user.role}
+                                                    deleteClickHandler={deleteItemClickHandler}/>)}
+                        </div>
                     </div>
-                    <h2>
-                        Liked Food:
-                    </h2>
-                    <div>
-                        {foodLikes.map((like) => <FoodItem foodItem={like.foodItem} role={user.role}
-                                                           deleteClickHandler={deleteItemClickHandler}/>)}
+                    <div className={"col-6 al-border-left"}>
+                        <h2>
+                            Liked Restaurants:
+                        </h2>
+                        {restaurantLikes.map(
+                            (like) => <UserItem restaurant={like.restaurant} role={user.role}
+                                                deleteClickHandler={deleteRestaurantClickHandler}/>)}
                     </div>
-                    <h2>
-                        Liked Restaurants:
-                    </h2>
-                    {restaurantLikes.map(
-                        (like) => <RestaurantItem restaurant={like.restaurant} role={user.role}
-                                                  deleteClickHandler={deleteRestaurantClickHandler}/>)}
+
+                </div>
+            )
+        } else if (user.role === "waiter") {
+            return (
+                <div className={"row"}>
+                    <div className={"col-12 al-border-bottom"}>
+                        <h2>
+                            Menu of {workingAt.name}:
+                        </h2>
+                        <GetRestaurantMenu restaurant={workingAt}
+                                           deleteClickHandler={deleteItemClickHandler}/>
+                    </div>
+                    <div className={"col-6"}>
+                        <h2>
+                            Liked Food:
+                        </h2>
+                        <div>
+                            {foodLikes.map(
+                                (like) => <FoodItem foodItem={like.foodItem} role={user.role}
+                                                    deleteClickHandler={deleteItemClickHandler}/>)}
+                        </div>
+                    </div>
+                    <div className={"col-6 al-border-left"}>
+                        <h2>
+                            Liked Restaurants:
+                        </h2>
+                        {restaurantLikes.map(
+                            (like) => <UserItem restaurant={like.restaurant} role={user.role}
+                                                deleteClickHandler={deleteRestaurantClickHandler}/>)}
+                    </div>
                 </div>
             )
         }
@@ -108,10 +156,33 @@ const GetDetailsOfOwnProfile = ({user}) => {
                     <button className={"al-v-center al-full btn btn-primary al-button"}
                             onClick={() => {
                                 navigate("/edit_profile")
-                            }}>Edit
-                        Profile
+                            }}>Edit Profile
                     </button>
                 </div>
+            </div>
+            <div className={"al-border-bottom"}>
+                {user.description === "" || user.description === undefined ? <h3>Edit profile
+                                                                               to enter description</h3>
+                                                                           :
+                 <h3>{user.description}</h3>}
+                {user.date !== undefined ?
+                 <>
+                     {user.role === "restaurant" ? <>Open Since: </> : <>Birth
+                         Date: </>} {getDateString(user.date.substring(0, 10))}
+                 </> : <></>}
+                <div>
+                    Email: {user.email}
+                </div>
+                {user.role === "restaurant" ?
+                 <div className={"al-padding-bottom-small"}>
+                     <i className="fas fa-map-marker-alt"/> {user.address}
+                     <br/>
+                     ID for Employees: {user._id}
+                 </div> : <></>}
+                {user.role === "waiter" ?
+                 <div className={"al-padding-bottom-small"}>
+                     Working at: <Link to={`/profile/${workingAt._id}`} className = {"al-color-white al-no-underline"}>{workingAt.name}</Link>
+                 </div> : <></>}
             </div>
             {getRoleSpecificDiv()}
         </>

@@ -22,7 +22,8 @@ const NavigationSidebar = ({
             <div className="list-group al-navbar">
                 <Link to="/home"
                       className={`list-group-item list-group-item-action ${active === "home" ?"al-navbar-active" : "al-navbar-inactive"}`}>
-                    Home
+                    {user._id !== undefined ? <span><img src={user.image} className={"al-profile-image-small al-margin-right-small"}/>{user.name}</span>:<>Home</>  }
+
                 </Link>
                 {
                     user._id !== undefined ?
@@ -42,7 +43,7 @@ const NavigationSidebar = ({
                 {
                     user._id !== undefined ?
                     <div onClick={logoutClickHandler}
-                         className={"list-group-item list-group-item-action al-navbar-inactive"}>
+                         className={"list-group-item list-group-item-action al-navbar-inactive al-pointer"}>
                         Logout
                     </div> : <></>
                 }

@@ -44,8 +44,8 @@ const UserRatingItem = ({
             {showRestaurantName ?
              <div className={"al-flex"}>
                  <Link to={`/profile/${rating.restaurant._id}`}>
-                     <img src={rating.user.image}
-                          alt={rating.user.username}
+                     <img src={rating.restaurant.image}
+                          alt={rating.restaurant.username}
                           className={"al-foodItem-img "}/>
                  </Link>
                  <span className={"al-padding-left-small"}>

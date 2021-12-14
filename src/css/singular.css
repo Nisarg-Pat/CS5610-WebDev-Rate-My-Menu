@@ -154,3 +154,23 @@
 .al-border-bottom {
     border-bottom: 2px solid var(--border-color)
 }
+
+.al-border-left {
+    border-left: 2px solid var(--border-color)
+}
+
+.al-border-right {
+    border-right: 2px solid var(--border-color)
+}
+
+.al-border-top {
+    border-top: 2px solid var(--border-color)
+}
+
+.al-nav {
+    border-width:0;
+}
+
+.al-pointer {
+    cursor: pointer;
+}

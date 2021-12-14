@@ -21,6 +21,10 @@ body {
     border-radius: 12px;
 }
 
+.al-restaurantListItem:hover {
+    font-weight: bolder;
+}
+
 .al-search-input {
     background-color: var(--background-light);
     padding: 12px 12px 12px 48px;
@@ -162,6 +166,15 @@ body {
     padding: 12px
 }
 
-.wd-nav {
-    border-width:0;
+.al-addFoodItemToRestaurant {
+    background-color: var(--background-light);
+    border-radius: 12px;
+    padding: 12px
+}
+
+.al-profile-image-small {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
 }

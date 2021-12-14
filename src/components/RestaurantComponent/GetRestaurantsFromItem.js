@@ -1,17 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {findRestaurantsFromItem} from "../../services/menuService";
-import RestaurantItem from "./RestaurantItem";
+import UserItem from "./UserItem";
 
-const GetRestaurantsFromItem = ({item}) => {
-    let [restaurants, setRestaurants] = useState([]);
-    useEffect(() => {
-        findRestaurantsFromItem(item).then((restaurants) => setRestaurants(restaurants));
-    }, [item]);
+const GetRestaurantsFromItem = ({restaurants}) => {
 
     return (
         <div>
             {restaurants.map(
-                (restaurant) => <RestaurantItem restaurant={restaurant.restaurant} price={restaurant.price} key={restaurant.restaurant._id}/>)}
+                (restaurant) => <UserItem restaurant={restaurant.restaurant} price={restaurant.price} key={restaurant.restaurant._id}/>)}
         </div>
     )
 }
