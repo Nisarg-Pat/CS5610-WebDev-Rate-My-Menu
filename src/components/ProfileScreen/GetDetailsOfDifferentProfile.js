@@ -68,7 +68,7 @@ const GetDetailsOfDifferentProfile = ({user, profile}) => {
         if (profile.role === "restaurant") {
             return (
                 <div className={"row"}>
-                    <div className={"col-8"}>
+                    <div className={`${user.role === "restaurant" || user.role === undefined ? "col-12":"col-12 col-lg-8"}`}>
                         <h2>
                             Menu:
                         </h2>
@@ -78,7 +78,7 @@ const GetDetailsOfDifferentProfile = ({user, profile}) => {
                         </h2>
                         <UserRatingList ratings={restaurantRatings} showUsername={true}/>
                     </div>
-                    <div className={"col-4 al-margin-top-small"}>
+                    <div className={"col-12 col-lg-4 al-margin-top-small"}>
                         {user.role === "customer" || user.role === "waiter" ?
                          <div className={"al-margin-bottom-small"}>
                              <RatingBox user={user} restaurant={profile} ratings={restaurantRatings}
@@ -92,7 +92,7 @@ const GetDetailsOfDifferentProfile = ({user, profile}) => {
         } else if (profile.role === "customer" || profile.role === "waiter") {
             return (
                 <div className={"row"}>
-                    <div className={"col-6"}>
+                    <div className={"col-12 col-lg-6"}>
                         <h2>
                             Liked Food:
                         </h2>
@@ -100,7 +100,7 @@ const GetDetailsOfDifferentProfile = ({user, profile}) => {
                             {foodLikes.map((like) => <FoodItem foodItem={like.foodItem}/>)}
                         </div>
                     </div>
-                    <div className={"col-6 al-border-left"}>
+                    <div className={"col-12 col-lg-6 al-border-left"}>
                         <h2>
                             Liked Restaurants:
                         </h2>

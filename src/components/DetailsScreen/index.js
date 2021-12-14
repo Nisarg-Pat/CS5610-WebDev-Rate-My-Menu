@@ -11,7 +11,7 @@ const DetailsScreen = () => {
     }, [])
     return (
         <>
-            <div className="row">
+            <div className="row al-margin-bottom-small">
                 <div className={"col-2"}>
                     <NavigationSidebar active={"search"} user={user} setUser={setUser}/>
                 </div>

@@ -23,7 +23,7 @@ const ProfileScreen = () => {
 
     return (
         <>
-            <div className="row">
+            <div className="row al-margin-bottom-small">
                 <div className={"col-2"}>
                     <NavigationSidebar active={"profile"} user={user} setUser={setUser}/>
                 </div>

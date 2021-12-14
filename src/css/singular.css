@@ -174,3 +174,8 @@
 .al-pointer {
     cursor: pointer;
 }
+
+.al-hide-overflow {
+    overflow: hidden;
+    word-wrap: break-word;
+}

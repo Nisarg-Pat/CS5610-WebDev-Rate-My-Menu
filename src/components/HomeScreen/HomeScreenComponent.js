@@ -42,7 +42,7 @@ const HomeScreenComponent = ({user}) => {
     const getNoUserHome = () => {
         return (
             <div className={"row"}>
-                <div className={"col-10 al-allside-border"}>
+                <div className={"col-12 col-md-10 col-10 al-allside-border"}>
                     <div className={"row al-border-bottom al-padding-small"}>
                         Welcome to Food and Restaurant Review systems! You can Search for Food items and restaurants without logging in. You can login to help improve the community.
                     </div>
@@ -51,24 +51,24 @@ const HomeScreenComponent = ({user}) => {
                             New Restaurants
                         </h1>
                             {users.filter((user)=>user.role === "restaurant").slice(0, 5).map(
-                                (user) => <Link to={`/profile/${user._id}`} className={"col-6 al-color-white al-no-underline"}><UserItem restaurant={user}/></Link>)}
+                                (user) => <Link to={`/profile/${user._id}`} className={"col-sm-12 col-lg-6 al-color-white al-no-underline"}><UserItem restaurant={user}/></Link>)}
                     </div>
                     <div className={"row al-border-bottom"}>
                         <h1>
                             New Customers
                         </h1>
                         {users.filter((user)=>user.role === "customer").slice(0, 5).map(
-                            (user) => <Link to={`/profile/${user._id}`} className={"col-6 al-color-white al-no-underline"}><UserItem restaurant={user}/></Link>)}
+                            (user) => <Link to={`/profile/${user._id}`} className={"col-sm-12 col-lg-6 al-color-white al-no-underline"}><UserItem restaurant={user}/></Link>)}
                     </div>
                     <div className={"row"}>
                         <h1>
                             New Employees
                         </h1>
                         {users.filter((user)=>user.role === "waiter").slice(0, 5).map(
-                            (user) => <Link to={`/profile/${user._id}`} className={"col-6 al-color-white al-no-underline"}><UserItem restaurant={user}/></Link>)}
+                            (user) => <Link to={`/profile/${user._id}`} className={"col-sm-12 col-lg-6 al-color-white al-no-underline"}><UserItem restaurant={user}/></Link>)}
                     </div>
                 </div>
-                <div className={"col-2"}>
+                <div className={"d-none d-md-block col-md-2"}>
                     <LoginSignupComponent/>
                 </div>
             </div>

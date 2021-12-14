@@ -88,8 +88,8 @@ const GetDetailsOfOwnProfile = ({user}) => {
             )
         } else if (user.role === "customer") {
             return (
-                <div className={"row"}>
-                    <div className={"col-6"}>
+                <div className={"row al-padding-top-small al-padding-bottom-small"}>
+                    <div className={"col-12 col-lg-6"}>
                         <h2>
                             Liked Food:
                         </h2>
@@ -99,7 +99,7 @@ const GetDetailsOfOwnProfile = ({user}) => {
                                                     deleteClickHandler={deleteItemClickHandler}/>)}
                         </div>
                     </div>
-                    <div className={"col-6 al-border-left"}>
+                    <div className={"col-12 col-lg-6 al-border-left"}>
                         <h2>
                             Liked Restaurants:
                         </h2>
@@ -120,7 +120,7 @@ const GetDetailsOfOwnProfile = ({user}) => {
                         <GetRestaurantMenu restaurant={workingAt}
                                            deleteClickHandler={deleteItemClickHandler}/>
                     </div>
-                    <div className={"col-6"}>
+                    <div className={"col-12 col-lg-6"}>
                         <h2>
                             Liked Food:
                         </h2>
@@ -130,7 +130,7 @@ const GetDetailsOfOwnProfile = ({user}) => {
                                                     deleteClickHandler={deleteItemClickHandler}/>)}
                         </div>
                     </div>
-                    <div className={"col-6 al-border-left"}>
+                    <div className={"col 12 col-lg-6 al-border-left"}>
                         <h2>
                             Liked Restaurants:
                         </h2>
@@ -147,12 +147,12 @@ const GetDetailsOfOwnProfile = ({user}) => {
     return (
         <>
             <div className={"row al-border-bottom al-padding-bottom-small al-padding-top-small"}>
-                <div className={"col-10"}>
+                <div className={"col-8 col-md-9 col-lg-10"}>
                     <h1 className={"al-v-center"}>
                         {user.name}
                     </h1>
                 </div>
-                <div className={"col-2 al-flex"}>
+                <div className={"col-4 col-md-3 col-lg-2 al-flex"}>
                     <button className={"al-v-center al-full btn btn-primary al-button"}
                             onClick={() => {
                                 navigate("/edit_profile")
@@ -160,7 +160,7 @@ const GetDetailsOfOwnProfile = ({user}) => {
                     </button>
                 </div>
             </div>
-            <div className={"al-border-bottom"}>
+            <div className={"al-border-bottom al-padding-bottom-small"}>
                 {user.description === "" || user.description === undefined ? <h3>Edit profile
                                                                                to enter description</h3>
                                                                            :

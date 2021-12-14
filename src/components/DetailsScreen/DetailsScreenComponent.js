@@ -63,9 +63,9 @@ const DetailsScreenComponent = ({user}) => {
     const getRoleSpecificDiv = (user) => {
         if (user.role === "restaurant") {
             return (
-                <>
+                <div className={"al-margin-bottom-small"}>
                     <AddFoodItemBox restaurant={user} itemDetails={itemDetails}/>
-                </>
+                </div>
             )
         } else if (user.role === "customer" || user.role === "waiter") {
             return (
@@ -86,7 +86,7 @@ const DetailsScreenComponent = ({user}) => {
 
     return (
         <div className={"row"}>
-            <div className={"col-8 al-allside-border"}>
+            <div className={"col-12 col-lg-8 al-allside-border al-margin-bottom-small"}>
                 <div
                     className={"row al-margin-bottom-small al-padding-top-small al-padding-bottom-small al-border-bottom"}>
                     <div className={"col-9"}>
@@ -117,7 +117,7 @@ const DetailsScreenComponent = ({user}) => {
                 </h2>
                 <UserRatingList ratings={foodRatings} showUsername={true}/>
             </div>
-            <div className={"col-4"}>
+            <div className={"col-12 col-lg-4"}>
                 {getRoleSpecificDiv(user)}
             </div>
         </div>

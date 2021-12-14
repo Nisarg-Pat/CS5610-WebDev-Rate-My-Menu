@@ -43,16 +43,12 @@ const LoginScreen = () => {
 
     return (
         <div className={"row"}>
-            <div className={"col-4"}/>
-            <div className={"col-4 al-signup"}>
-                <div className={"row"}>
-                    <div className={"col-4"}/>
-                    <div className={"col-4"}>
-                        <h1>
-                            Login
-                        </h1>
-                    </div>
-                    <div className={"col-4"}/>
+            <div className={"col-sm-1 col-md-2 col-lg-3 col-xxl-4"}/>
+            <div className={"col-12 col-sm-10 col-md-8 col-lg-6 col-xxl-4 al-signup"}>
+                <div className={"al-flex al-h-center"}>
+                    <h1>
+                        Login
+                    </h1>
                 </div>
                 <div className={"row"}>
                     <label className={"row al-signup-label"}>
@@ -91,7 +87,7 @@ const LoginScreen = () => {
                     </div>
                 </div>
             </div>
-            <div className={"col-4"}/>
+            <div className={"col-sm-1 col-md-2 col-lg-3 col-xxl-4"}/>
         </div>
     )
 }
