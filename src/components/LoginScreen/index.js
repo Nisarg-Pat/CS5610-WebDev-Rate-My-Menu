@@ -58,6 +58,8 @@ const LoginScreen = () => {
                         <div className={"col-6"}>
                             <input className={"al-signup-input"}
                                    value={user.username}
+                                   placeholder={"Your Username"}
+                                   title={"Your Username"}
                                    onChange={(e) => {
                                        formHandler(e.target.value, "username");
                                    }}/>
@@ -71,6 +73,8 @@ const LoginScreen = () => {
                         <div className={"col-6"}>
                             <input type="password" className={"al-signup-input"}
                                    value={user.password}
+                                   placeholder={"Your Password"}
+                                   title={"Your Password"}
                                    onChange={(e) => {
                                        formHandler(e.target.value, "password");
                                    }}/>

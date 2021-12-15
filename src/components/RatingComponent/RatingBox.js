@@ -50,7 +50,9 @@ const RatingBox = ({user, restaurant, item, ratings, setRatings}) => {
                         setComment(e.target.value)
                     }}
                               className={"al-comment-text"}
-                    value={comment}/>
+                    value={comment}
+                    placeholder={"Enter comment"}
+                    title={"Comment"}/>
                 </label>
                 <hr/>
                 <label>

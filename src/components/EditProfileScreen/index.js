@@ -89,6 +89,8 @@ const EditProfileScreen = () => {
                         <div className={"col-6"}>
                             <input className={"al-signup-input"}
                                    value={user.name}
+                                   placeholder={"Your name"}
+                                   title={"Your name"}
                                    onChange={(e) => {
                                        formHandler(e.target.value, "name");
                                    }}/>
@@ -103,6 +105,8 @@ const EditProfileScreen = () => {
                             <input className={"al-signup-input"}
                                    type={"email"}
                                    value={user.email}
+                                   placeholder={"Your email"}
+                                   title={"Your email"}
                                    onChange={(e) => {
                                        formHandler(e.target.value, "email");
                                    }}/>
@@ -128,9 +132,12 @@ const EditProfileScreen = () => {
                         </div>
                         <div className={"col-6"}>
                             <textArea className={"al-signup-textArea"}
+                                      value={user.description}
+                                      placeholder={"Description"}
+                                      title={"Description"}
                                       onChange={(e) => {
                                           formHandler(e.target.value, "description");
-                                      }}>{user.description}</textArea>
+                                      }}/>
                         </div>
                     </label>
                     <br/>
@@ -142,9 +149,12 @@ const EditProfileScreen = () => {
                              </div>
                              <div className={"col-6"}>
                                  <textarea className={"al-signup-input"}
+                                           value={user.address}
+                                           placeholder={"Your address"}
+                                           title={"Your address"}
                                            onChange={(e) => {
                                                formHandler(e.target.value, "address");
-                                           }}>{user.address}</textarea>
+                                           }}/>
                              </div>
                          </label>
                          <br/>

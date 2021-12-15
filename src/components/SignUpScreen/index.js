@@ -107,6 +107,8 @@ const SignUpScreen = () => {
                         <div className={"col-6"}>
                             <input className={"al-signup-input"}
                                    value={user.username}
+                                   placeholder={"Your Username"}
+                                   title={"Your Username"}
                                    onChange={(e) => {
                                        formHandler(e.target.value, "username");
                                    }}/>
@@ -120,6 +122,8 @@ const SignUpScreen = () => {
                         <div className={"col-6"}>
                             <input type="password" className={"al-signup-input"}
                                    value={user.password}
+                                   placeholder={"Your Password"}
+                                   title={"Your Password"}
                                    onChange={(e) => {
                                        formHandler(e.target.value, "password");
                                    }}/>
@@ -133,6 +137,8 @@ const SignUpScreen = () => {
                         <div className={"col-6"}>
                             <input type="password" className={"al-signup-input"}
                                    value={user.verifypassword}
+                                   placeholder={"Rewrite Password"}
+                                   title={"Rewrite Password"}
                                    onChange={(e) => {
                                        formHandler(e.target.value, "verify-password");
                                    }}/>
@@ -147,6 +153,8 @@ const SignUpScreen = () => {
                             <input
                                 className={"al-signup-input"}
                                 value={user.name}
+                                placeholder={"Your Name"}
+                                title={"Your Name"}
                                 onChange={(e) => {
                                     formHandler(e.target.value, "name");
                                 }}/>
@@ -161,6 +169,8 @@ const SignUpScreen = () => {
                             <input className={"al-signup-input"}
                                    type={"email"}
                                    value={user.email}
+                                   placeholder={"Your Email"}
+                                   title={"Your Email"}
                                    onChange={(e) => {
                                        formHandler(e.target.value, "email");
                                    }}/>
@@ -205,6 +215,8 @@ const SignUpScreen = () => {
                              <div className={"col-6"}>
                                  <input type="text" className={"al-signup-input"}
                                         value={user.waiterRestaurantId}
+                                        placeholder={"Restaurant Id"}
+                                        title={"Restaurant Id"}
                                         onChange={(e) => {
                                             formHandler(e.target.value, "waiterRestaurantId");
                                         }}/>
@@ -220,9 +232,12 @@ const SignUpScreen = () => {
                              </div>
                              <div className={"col-6"}>
                                  <textarea className={"al-signup-input"}
+                                           value={user.address}
+                                           placeholder={"Your address"}
+                                           title={"Your address"}
                                         onChange={(e) => {
                                             formHandler(e.target.value, "address");
-                                        }}>{user.address}</textarea>
+                                        }}/>
                              </div>
                          </label>
                          <br/>
