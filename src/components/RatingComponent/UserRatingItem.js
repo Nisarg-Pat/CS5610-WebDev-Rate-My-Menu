@@ -1,14 +1,21 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-const UserRatingItem = ({
+const   UserRatingItem = ({
                             rating,
                             showUsername = false,
                             showFoodTitle = false,
-                            showRestaurantName = false
+                            showRestaurantName = false,
+                            showTitleUserName = false
                         }) => {
     return (
         <div className={"al-ratingListItem al-margin-bottom-small al-padding-small"}>
+            {showTitleUserName ?
+            <div className={"al-border-bottom al-margin-bottom-small al-padding-bottom-small"}>
+                <Link to={`/profile/${rating.user._id}`} className={`al-no-underline al-color-white`}>
+                     {rating.user.username}
+                </Link>
+            </div>:<></>}
             {showUsername ?
              <div className={"al-flex"}>
                  <Link to={`/profile/${rating.user._id}`}>

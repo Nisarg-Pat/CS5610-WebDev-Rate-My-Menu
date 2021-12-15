@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
-import {getFoodRatingsByUser,} from "../../services/userFoodRatingService";
+import {getFoodRatingsByUser, getRatingsOfFoodItem,} from "../../services/userFoodRatingService";
 import UserRatingList from "../RatingComponent/UserRatingList";
 import {
     getRatingsOfRestaurant,
@@ -9,6 +9,9 @@ import {
 import LoginSignupComponent from "../LoginSignupComponent";
 import {getEmployeesListByRestaurantId, getUsersList} from "../../services/userService";
 import UserItem from "../RestaurantComponent/UserItem";
+import {getFoodLikesByUser} from "../../services/userFoodLikesService";
+import {getRestaurantLikesByUser} from "../../services/userRestaurantLikesService";
+import {getFoodItemFromId} from "../../services/foodItemService";
 
 const HomeScreenComponent = ({user}) => {
 
@@ -20,11 +23,22 @@ const HomeScreenComponent = ({user}) => {
 
     useEffect(() => {
         if (user.role === "customer") {
-            getFoodRatingsByUser(user).then((ratings) => setFoodRatings(ratings));
-            getRestaurantRatingsByUser(user).then((ratings) => setRestaurantRatings(ratings));
+            getFoodLikesByUser(user).then((likes) => {
+                likes.map((like) => getRatingsOfFoodItem(like.foodItem).then((ratings) => setFoodRatings(...foodRatings, ratings)))
+            });
+            getRestaurantLikesByUser(user).then((likes) => {
+                likes.map((like) =>getRatingsOfRestaurant(like.restaurant).then(ratings => setRestaurantRatings(...restaurantRatings, ratings)))
+            });
+            // getFoodRatingsByUser(user).then((ratings) => setFoodRatings(ratings));
+            // getRestaurantRatingsByUser(user).then((ratings) => setRestaurantRatings(ratings));
+
         } else if (user.role === "waiter") {
-            getFoodRatingsByUser(user).then((ratings) => setFoodRatings(ratings));
-            getRestaurantRatingsByUser(user).then((ratings) => setRestaurantRatings(ratings));
+            getFoodLikesByUser(user).then((likes) => {
+                likes.map((like) => getRatingsOfFoodItem(like.foodItem).then((ratings) => setFoodRatings(...foodRatings, ratings)))
+            });
+            getRestaurantLikesByUser(user).then((likes) => {
+                likes.map((like) =>getRatingsOfRestaurant(like.restaurant).then(ratings => setRestaurantRatings(...restaurantRatings, ratings)))
+            });
             getEmployeesListByRestaurantId(user.waiterRestaurantId)
                 .then((employees) => setEmployees(employees))
         } else if (user.role === "restaurant") {
@@ -94,7 +108,7 @@ const HomeScreenComponent = ({user}) => {
                                                                                                     ? "al-navbar-active"
                                                                                                     : ""}`}
                                  onClick={() => setActive("foodItem")}>
-                                 Food Ratings
+                                 Liked Food Ratings
                              </li> : <></>}
                             {user.role === 'waiter' || user.role === "restaurant" || user.role
                              === "customer" ?
@@ -103,7 +117,7 @@ const HomeScreenComponent = ({user}) => {
                                                                                                     ? "al-navbar-active"
                                                                                                     : ""}`}
                                  onClick={() => setActive("restaurant")}>
-                                 Restaurant Ratings
+                                 Liked Restaurant Ratings
                              </li> : <></>}
                             {user.role === 'waiter' || user.role === "restaurant" ?
                              <li className={`nav-item al-padding-small al-margin-small al-pointer ${active
@@ -118,12 +132,15 @@ const HomeScreenComponent = ({user}) => {
 
                     <div className={"al-padding-top-small"}>
                         {active === "foodItem" ? <UserRatingList ratings={foodRatings}
+                                                                 showTitleUserName={true}
                                                                  showFoodTitle={true}/> : <></>}
                         {active === "restaurant" ? <UserRatingList ratings={restaurantRatings}
                                                                    showRestaurantName={user.role
                                                                                        !== "restaurant"}
                                                                    showUsername={user.role
-                                                                                 === "restaurant"}/>
+                                                                                 === "restaurant"}
+                                                                   showTitleUserName={user.role
+                                                                                  !== "restaurant"}/>
                                                  : <></>}
                         {active === "employees" ? <div>
                                                     {employees.map(

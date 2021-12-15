@@ -2,7 +2,10 @@ import React, {useEffect, useState} from "react";
 import GetRestaurantMenu from "../RestaurantComponent/GetRestaurantMenu";
 import {deleteFoodLike, getFoodLikesByUser} from "../../services/userFoodLikesService";
 import FoodItem from "../FoodIemComponent/FoodItem";
-import {getRatingsOfRestaurant} from "../../services/userRestaurantRatingService";
+import {
+    getRatingsOfRestaurant,
+    getRestaurantRatingsByUser
+} from "../../services/userRestaurantRatingService";
 import {
     deleteRestaurantLike,
     getRestaurantLikesByUser
@@ -11,14 +14,17 @@ import UserRatingList from "../RatingComponent/UserRatingList";
 import UserItem from "../RestaurantComponent/UserItem";
 import {Link, useNavigate} from "react-router-dom";
 import {findProfileById} from "../../services/userService";
+import {getFoodRatingsByUser} from "../../services/userFoodRatingService";
 
 const GetDetailsOfOwnProfile = ({user}) => {
     const navigate = useNavigate();
 
+    let [foodRatings, setFoodRatings] = useState([]);
     let [restaurantRatings, setRestaurantRatings] = useState([]);
     const [foodLikes, setFoodLikes] = useState([]);
     const [restaurantLikes, setRestaurantLikes] = useState([]);
     const [workingAt, setWorkingAt] = useState([]);
+    let [active, setActive] = useState("foodItem");
 
     const getDateString = (date) => {
         const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -56,9 +62,13 @@ const GetDetailsOfOwnProfile = ({user}) => {
         if (user.role === "restaurant") {
             getRatingsOfRestaurant(user).then((ratings) => setRestaurantRatings(ratings));
         } else if (user.role === "customer") {
+            getFoodRatingsByUser(user).then((ratings) => setFoodRatings(ratings));
+            getRestaurantRatingsByUser(user).then((ratings) => setRestaurantRatings(ratings));
             getFoodLikesByUser(user).then((likes) => setFoodLikes(likes));
             getRestaurantLikesByUser(user).then((likes) => setRestaurantLikes(likes));
         } else if (user.role === "waiter") {
+            getFoodRatingsByUser(user).then((ratings) => setFoodRatings(ratings));
+            getRestaurantRatingsByUser(user).then((ratings) => setRestaurantRatings(ratings));
             getFoodLikesByUser(user).then((likes) => setFoodLikes(likes));
             getRestaurantLikesByUser(user).then((likes) => setRestaurantLikes(likes));
             findProfileById(user.waiterRestaurantId).then((restaurant) => setWorkingAt(restaurant));
@@ -84,26 +94,68 @@ const GetDetailsOfOwnProfile = ({user}) => {
                     </div>
                 </div>
             )
-        } else if (user.role === "customer") {
+        } else if (user.role === "customer" || user.role === "waiter") {
             return (
-                <div className={"row al-padding-top-small al-padding-bottom-small"}>
-                    <div className={"col-12 col-lg-6"}>
+                <div className={"al-padding-top-small al-padding-bottom-small"}>
+                    {user.role === "waiter" ? <div className={"col-12 al-border-bottom"}>
                         <h2>
-                            Liked Food:
+                            Menu of {workingAt.name}:
                         </h2>
-                        <div>
-                            {foodLikes.map(
-                                (like, key) => <FoodItem foodItem={like.foodItem} role={user.role}
-                                                    deleteClickHandler={deleteItemClickHandler} key={key}/>)}
+                        <GetRestaurantMenu restaurant={workingAt}
+                                           deleteClickHandler={deleteItemClickHandler}/>
+                    </div>:<></>}
+
+                    <div className={"row al-border-bottom"}>
+                        <div className={"col-12 col-lg-6"}>
+                            <h2>
+                                Liked Food:
+                            </h2>
+                            <div>
+                                {foodLikes.map(
+                                    (like, key) => <FoodItem foodItem={like.foodItem} role={user.role}
+                                                             deleteClickHandler={deleteItemClickHandler} key={key}/>)}
+                            </div>
+                        </div>
+                        <div className={"col-12 col-lg-6 al-border-left"}>
+                            <h2>
+                                Liked Restaurants:
+                            </h2>
+                            {restaurantLikes.map(
+                                (like, key) => <UserItem restaurant={like.restaurant} role={user.role}
+                                                         deleteClickHandler={deleteRestaurantClickHandler} key={key}/>)}
                         </div>
                     </div>
-                    <div className={"col-12 col-lg-6 al-border-left"}>
-                        <h2>
-                            Liked Restaurants:
-                        </h2>
-                        {restaurantLikes.map(
-                            (like, key) => <UserItem restaurant={like.restaurant} role={user.role}
-                                                deleteClickHandler={deleteRestaurantClickHandler} key={key}/>)}
+
+                    <div>
+                        <div className={"al-border-bottom"}>
+                            <ul className="nav nav-tabs al-nav al-font-big">
+                                 <li className={`nav-item al-padding-small al-margin-small al-pointer ${active
+                                                                                                        === "foodItem"
+                                                                                                        ? "al-navbar-active"
+                                                                                                        : ""}`}
+                                     onClick={() => setActive("foodItem")}>
+                                     Food Ratings
+                                 </li>
+                                 <li className={`nav-item al-padding-small al-margin-small al-pointer ${active
+                                                                                                        === "restaurant"
+                                                                                                        ? "al-navbar-active"
+                                                                                                        : ""}`}
+                                     onClick={() => setActive("restaurant")}>
+                                     Restaurant Ratings
+                                 </li>
+                            </ul>
+                        </div>
+
+                        <div className={"al-padding-top-small"}>
+                            {active === "foodItem" ? <UserRatingList ratings={foodRatings}
+                                                                     showFoodTitle={true}/> : <></>}
+                            {active === "restaurant" ? <UserRatingList ratings={restaurantRatings}
+                                                                       showRestaurantName={user.role
+                                                                                           !== "restaurant"}
+                                                                       showUsername={user.role
+                                                                                     === "restaurant"}/>
+                                                     : <></>}
+                        </div>
                     </div>
 
                 </div>

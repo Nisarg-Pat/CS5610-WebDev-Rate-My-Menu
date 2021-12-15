@@ -5,7 +5,8 @@ const UserRatingList = ({
                             ratings,
                             showUsername = false,
                             showRestaurantName = false,
-                            showFoodTitle = false
+                            showFoodTitle = false,
+                            showTitleUserName = false
                         }) => {
     return (
         <div className={"al-ratingList"}>
@@ -15,6 +16,7 @@ const UserRatingList = ({
                                     showUsername={showUsername}
                                     showRestaurantName={showRestaurantName}
                                     showFoodTitle={showFoodTitle}
+                                    showTitleUserName={showTitleUserName}
                     key={key}/>
                 )
             })}

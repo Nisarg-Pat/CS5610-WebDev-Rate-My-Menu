@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from "react";
 import GetRestaurantMenu from "../RestaurantComponent/GetRestaurantMenu";
-import {getRatingsOfRestaurant} from "../../services/userRestaurantRatingService";
+import {
+    getRatingsOfRestaurant,
+    getRestaurantRatingsByUser
+} from "../../services/userRestaurantRatingService";
 import RatingBox from "../RatingComponent/RatingBox";
 import UserRatingList from "../RatingComponent/UserRatingList";
 import FoodItem from "../FoodIemComponent/FoodItem";
@@ -12,14 +15,17 @@ import {
 } from "../../services/userRestaurantLikesService";
 import UserItem from "../RestaurantComponent/UserItem";
 import {findProfileById} from "../../services/userService";
+import {getFoodRatingsByUser} from "../../services/userFoodRatingService";
 
 const GetDetailsOfDifferentProfile = ({user, profile}) => {
     const navigate = useNavigate();
 
+    let [foodRatings, setFoodRatings] = useState([]);
     let [restaurantRatings, setRestaurantRatings] = useState([]);
     const [foodLikes, setFoodLikes] = useState([]);
     const [restaurantLikes, setRestaurantLikes] = useState([]);
     let [liked, setLiked] = useState(false);
+    let [active, setActive] = useState("foodItem");
     const [workingAt, setWorkingAt] = useState([]);
 
     const getDateString = (date) => {
@@ -36,9 +42,13 @@ const GetDetailsOfDifferentProfile = ({user, profile}) => {
         if (profile.role === "restaurant") {
             getRatingsOfRestaurant(profile).then((ratings) => setRestaurantRatings(ratings));
         } else if (profile.role === "customer") {
+            getFoodRatingsByUser(profile).then((ratings) => setFoodRatings(ratings));
+            getRestaurantRatingsByUser(profile).then((ratings) => setRestaurantRatings(ratings));
             getFoodLikesByUser(profile).then((likes) => setFoodLikes(likes));
             getRestaurantLikesByUser(profile).then((likes) => setRestaurantLikes(likes));
         } else if (profile.role === "waiter") {
+            getFoodRatingsByUser(profile).then((ratings) => setFoodRatings(ratings));
+            getRestaurantRatingsByUser(profile).then((ratings) => setRestaurantRatings(ratings));
             getFoodLikesByUser(profile).then((likes) => setFoodLikes(likes));
             getRestaurantLikesByUser(profile).then((likes) => setRestaurantLikes(likes));
             findProfileById(profile.waiterRestaurantId).then((restaurant) => setWorkingAt(restaurant));
@@ -106,6 +116,37 @@ const GetDetailsOfDifferentProfile = ({user, profile}) => {
                         </h2>
                         {restaurantLikes.map(
                             (like, key) => <UserItem restaurant={like.restaurant} key={key}/>)}
+                    </div>
+                    <div>
+                        <div className={"al-border-bottom al-border-top"}>
+                            <ul className="nav nav-tabs al-nav al-font-big">
+                                <li className={`nav-item al-padding-small al-margin-small al-pointer ${active
+                                                                                                       === "foodItem"
+                                                                                                       ? "al-navbar-active"
+                                                                                                       : ""}`}
+                                    onClick={() => setActive("foodItem")}>
+                                    Food Ratings
+                                </li>
+                                <li className={`nav-item al-padding-small al-margin-small al-pointer ${active
+                                                                                                       === "restaurant"
+                                                                                                       ? "al-navbar-active"
+                                                                                                       : ""}`}
+                                    onClick={() => setActive("restaurant")}>
+                                    Restaurant Ratings
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div className={"al-padding-top-small"}>
+                            {active === "foodItem" ? <UserRatingList ratings={foodRatings}
+                                                                     showFoodTitle={true}/> : <></>}
+                            {active === "restaurant" ? <UserRatingList ratings={restaurantRatings}
+                                                                       showRestaurantName={user.role
+                                                                                           !== "restaurant"}
+                                                                       showUsername={user.role
+                                                                                     === "restaurant"}/>
+                                                     : <></>}
+                        </div>
                     </div>
                 </div>
             )
