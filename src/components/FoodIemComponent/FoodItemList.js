@@ -5,7 +5,7 @@ const FoodItemList = ({items}) => {
     return (
         <div>
             {
-                items.map((item) => <FoodItem foodItem={item}/>)
+                items.map((item, key) => <FoodItem foodItem={item} key={key}/>)
             }
         </div>
     )

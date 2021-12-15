@@ -97,7 +97,7 @@ const GetDetailsOfDifferentProfile = ({user, profile}) => {
                             Liked Food:
                         </h2>
                         <div>
-                            {foodLikes.map((like) => <FoodItem foodItem={like.foodItem}/>)}
+                            {foodLikes.map((like, key) => <FoodItem foodItem={like.foodItem} key={key}/>)}
                         </div>
                     </div>
                     <div className={"col-12 col-lg-6 al-border-left"}>
@@ -105,7 +105,7 @@ const GetDetailsOfDifferentProfile = ({user, profile}) => {
                             Liked Restaurants:
                         </h2>
                         {restaurantLikes.map(
-                            (like) => <UserItem restaurant={like.restaurant}/>)}
+                            (like, key) => <UserItem restaurant={like.restaurant} key={key}/>)}
                     </div>
                 </div>
             )

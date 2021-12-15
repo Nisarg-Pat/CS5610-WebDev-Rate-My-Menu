@@ -1,5 +1,5 @@
 export const searchFoodItems = (searchTerm) => {
-    // const searchQuery = `https://api.spoonacular.com/recipes/complexSearch?query=${searchTerm}&number=2&apiKey=28c8823999dc4ef783647f58d191caad`
+    // const searchQuery = `https://api.spoonacular.com/recipes/complexSearch?query=${searchTerm}&number=10&apiKey=28c8823999dc4ef783647f58d191caad`
     const searchQuery = `http://localhost:4000/api/search`
     return fetch(searchQuery).then(res => res.json());
 }

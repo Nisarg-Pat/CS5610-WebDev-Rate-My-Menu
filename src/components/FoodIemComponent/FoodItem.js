@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 
 const FoodItem = ({foodItem, price, role, deleteClickHandler}) => {
     return (
-        <div className={"al-foodItem al-margin-bottom-small"}>
+        <div className={"al-foodItem al-margin-bottom-small"} key={foodItem.id}>
             <div className={"row"}>
                 <div className={"col-10"}>
                     <Link to={`/details/${foodItem.id}`}

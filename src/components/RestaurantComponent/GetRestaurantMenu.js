@@ -22,12 +22,15 @@ const GetRestaurantMenu = ({restaurant, showDelete}) => {
     return (
         <div>
             <div>
-                {showDelete ? menu.map((item) => <FoodItem foodItem={item.foodItem}
-                                                           role={restaurant.role}
-                                                           price={item.price}
-                                                           deleteClickHandler={deleteItemClickHandler}/>)
-                            : menu.map((item) => <FoodItem foodItem={item.foodItem}
-                                                           price={item.price}/>)
+                {showDelete ? menu.map((item, key) => <FoodItem foodItem={item.foodItem}
+                                                                role={restaurant.role}
+                                                                price={item.price}
+                                                                deleteClickHandler={deleteItemClickHandler}
+                            />)
+                            : menu.map((item, key) => <FoodItem foodItem={item.foodItem}
+                                                                price={item.price}
+                                                                key={key}
+                    />)
                 }
             </div>
         </div>

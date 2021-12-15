@@ -18,8 +18,8 @@ const SearchScreenComponent = ({user}) => {
     }
 
     useEffect(() => {
-        searchFoodItems(searchTerm).then((result) => setFoodItems(result.results))
-    }, [searchTerm]);
+        searchFoodItems(item).then((result) => setFoodItems(result.results))
+    }, [item]);
     return (
         <div>
             <div className={"al-flex al-v-center al-margin-bottom-large"}>

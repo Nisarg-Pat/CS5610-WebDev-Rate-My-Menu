@@ -21,19 +21,23 @@ const DetailsScreenComponent = ({user}) => {
     let [liked, setLiked] = useState(false);
 
     useEffect(() => {
+        console.log("useEffect called");
         getFoodItemFromId(params.id).then((result) => {
             setItemDetails(result)
-            getRatingsOfFoodItem(itemDetails).then((ratings) => setFoodRatings(ratings));
-            if(user.role === "customer" || user.role === "waiter") {
-                findFoodLike({user, foodItem: itemDetails}).then((response) => {
-                    if (response.status === 200) {
-                        setLiked(true);
-                    }
-                })
-            }
         });
+    }, [user, params.id]);
+
+    useEffect(() => {
+        getRatingsOfFoodItem(itemDetails).then((ratings) => setFoodRatings(ratings));
+        if(user.role === "customer" || user.role === "waiter") {
+            findFoodLike({user, foodItem: itemDetails}).then((response) => {
+                if (response.status === 200) {
+                    setLiked(true);
+                }
+            })
+        }
         findRestaurantsFromItem(itemDetails).then((restaurants) => setRestaurants(restaurants));
-    }, [user, params.id, itemDetails]);
+    }, [user, itemDetails])
 
     const getAverageOfRatings = () => {
         const ratings = foodRatings.map((rating) => rating.rating);

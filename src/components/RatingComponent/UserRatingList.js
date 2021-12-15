@@ -9,12 +9,13 @@ const UserRatingList = ({
                         }) => {
     return (
         <div className={"al-ratingList"}>
-            {ratings.map((rating) => {
+            {ratings.map((rating, key) => {
                 return (
                     <UserRatingItem rating={rating}
                                     showUsername={showUsername}
                                     showRestaurantName={showRestaurantName}
-                                    showFoodTitle={showFoodTitle}/>
+                                    showFoodTitle={showFoodTitle}
+                    key={key}/>
                 )
             })}
         </div>

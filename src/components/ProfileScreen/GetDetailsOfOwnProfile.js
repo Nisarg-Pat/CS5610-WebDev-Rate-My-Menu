@@ -63,7 +63,6 @@ const GetDetailsOfOwnProfile = ({user}) => {
             getRestaurantLikesByUser(user).then((likes) => setRestaurantLikes(likes));
             findProfileById(user.waiterRestaurantId).then((restaurant) => setWorkingAt(restaurant));
         }
-        console.log(user)
     }, [user])
 
     const getRoleSpecificDiv = () => {
@@ -94,8 +93,8 @@ const GetDetailsOfOwnProfile = ({user}) => {
                         </h2>
                         <div>
                             {foodLikes.map(
-                                (like) => <FoodItem foodItem={like.foodItem} role={user.role}
-                                                    deleteClickHandler={deleteItemClickHandler}/>)}
+                                (like, key) => <FoodItem foodItem={like.foodItem} role={user.role}
+                                                    deleteClickHandler={deleteItemClickHandler} key={key}/>)}
                         </div>
                     </div>
                     <div className={"col-12 col-lg-6 al-border-left"}>
@@ -103,8 +102,8 @@ const GetDetailsOfOwnProfile = ({user}) => {
                             Liked Restaurants:
                         </h2>
                         {restaurantLikes.map(
-                            (like) => <UserItem restaurant={like.restaurant} role={user.role}
-                                                deleteClickHandler={deleteRestaurantClickHandler}/>)}
+                            (like, key) => <UserItem restaurant={like.restaurant} role={user.role}
+                                                deleteClickHandler={deleteRestaurantClickHandler} key={key}/>)}
                     </div>
 
                 </div>

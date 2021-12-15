@@ -23,6 +23,7 @@ const RatingBox = ({user, restaurant, item, ratings, setRatings}) => {
             }
             addRestaurantRating(restaurantRating).then(() => {
                 setRatings([restaurantRating, ...ratings]);
+                setComment("");
             })
         } else {
             const foodRating = {
@@ -34,6 +35,7 @@ const RatingBox = ({user, restaurant, item, ratings, setRatings}) => {
             }
             addFoodRating(foodRating).then(() => {
                 setRatings([foodRating, ...ratings]);
+                setComment("");
             })
         }
 
@@ -43,21 +45,22 @@ const RatingBox = ({user, restaurant, item, ratings, setRatings}) => {
         <>
             <div className={"al-rating-box al-padding-small"}>
                 <label className={"al-full"}>
-                    Comment:
                     <br/>
                     <textarea onChange={(e) => {
                         setComment(e.target.value)
                     }}
-                    className={"al-comment-text"}/>
+                              className={"al-comment-text"}
+                    value={comment}/>
                 </label>
                 <hr/>
                 <label>
                     Stars
                     <select className={"al-margin-top-small al-stars"}
-                        onChange={e => {
-                        setStars(parseInt(e.target.value));
-                    }}>
-                        <option value="5" selected>5</option>
+                            onChange={e => {
+                                setStars(parseInt(e.target.value));
+                            }}
+                    value={stars}>
+                        <option value="5">5</option>
                         <option value="4">4</option>
                         <option value="3">3</option>
                         <option value="2">2</option>
