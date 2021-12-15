@@ -8,6 +8,7 @@ import RatingBox from "../RatingComponent/RatingBox";
 import UserRatingList from "../RatingComponent/UserRatingList";
 import {addFoodLike, findFoodLike} from "../../services/userFoodLikesService";
 import AddFoodItemBox from "../RestaurantComponent/AddFoodItemBox";
+import LoginSignupComponent from "../LoginSignupComponent";
 
 const DetailsScreenComponent = ({user}) => {
     const navigate = useNavigate();
@@ -75,13 +76,10 @@ const DetailsScreenComponent = ({user}) => {
                 </>
             )
         } else if (user._id === undefined) {
-
+            return (
+                <LoginSignupComponent/>
+            )
         }
-        return (
-            <div>
-                {user.role}
-            </div>
-        )
     }
 
     return (

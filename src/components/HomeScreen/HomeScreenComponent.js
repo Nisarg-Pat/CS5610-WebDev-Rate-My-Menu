@@ -42,7 +42,11 @@ const HomeScreenComponent = ({user}) => {
             <div className={"row"}>
                 <div className={"col-12 col-md-10 col-10 al-allside-border"}>
                     <div className={"row al-border-bottom al-padding-small"}>
-                        Welcome to Food and Restaurant Review systems! You can Search for Food items and restaurants without logging in. You can login to help improve the community.
+                        Welcome to Food and Restaurant Review systems!
+                        <br/>
+                        You can search for Food items and restaurants.
+                        <br/>
+                        Login to post reviews and like food items and restaurants!!
                     </div>
                     <div className={"row al-border-bottom"}>
                         <h1>

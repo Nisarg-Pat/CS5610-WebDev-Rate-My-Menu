@@ -90,6 +90,16 @@ const NavigationSidebar = ({
                         </span>
                     </div> : <></>
                 }
+
+                <Link to="/privacy_policy"
+                      className={`list-group-item list-group-item-action ${active === "privacy"
+                                                                           ? "al-navbar-active"
+                                                                           : "al-navbar-inactive"}`}>
+                    <span className={"al-flex al-v-center al-hide-overflow"}>
+                            <i className="fas fa-search"/>
+                            <span className={"d-none d-lg-block al-margin-left-small"}>Privacy policy</span>
+                        </span>
+                </Link>
             </div>
         </>
     );
