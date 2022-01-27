@@ -132,12 +132,11 @@ const EditProfileScreen = () => {
                         </div>
                         <div className={"col-6"}>
                             <textArea className={"al-signup-textArea"}
-                                      value={user.description}
                                       placeholder={"Description"}
                                       title={"Description"}
                                       onChange={(e) => {
                                           formHandler(e.target.value, "description");
-                                      }}/>
+                                      }}>{user.description}</textArea>
                         </div>
                     </label>
                     <br/>
@@ -148,13 +147,12 @@ const EditProfileScreen = () => {
                                  Address
                              </div>
                              <div className={"col-6"}>
-                                 <textarea className={"al-signup-input"}
-                                           value={user.address}
+                                 <textarea className={"al-signup-textArea"}
                                            placeholder={"Your address"}
                                            title={"Your address"}
                                            onChange={(e) => {
                                                formHandler(e.target.value, "address");
-                                           }}/>
+                                           }}>{user.address}</textarea>
                              </div>
                          </label>
                          <br/>

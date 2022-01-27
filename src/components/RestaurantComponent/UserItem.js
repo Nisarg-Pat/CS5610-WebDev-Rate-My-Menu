@@ -5,17 +5,14 @@ const UserItem = ({restaurant, price, role, deleteClickHandler}) => {
     return (
         <div className={"al-restaurantListItem al-padding-small al-margin-bottom-small"}>
             <div className={"al-flex"}>
-                <div className={"col-10"}>
-                    <Link to={`/profile/${restaurant._id}`}
-                          className={"al-no-underline"}>
+                <Link to={`/profile/${restaurant._id}`} className={"col-10 al-no-underline"}>
                         <img src={restaurant.image}
                              alt={restaurant.username}
                              className={"al-foodItem-img "}/>
                         <span className={"al-font-large al-padding-left-medium al-color-white"}>
                         {restaurant.username} {price !== undefined ? <>: ${price}</> : <></>}
                     </span>
-                    </Link>
-                </div>
+                </Link>
                 <div className={"col-2 al-flex al-v-center al-h-right"}>
                     {role === "customer" || role === "waiter"?
                      <button className={"btn btn-primary al-button"} onClick={() => deleteClickHandler(restaurant)}>

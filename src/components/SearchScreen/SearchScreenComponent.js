@@ -18,7 +18,9 @@ const SearchScreenComponent = ({user}) => {
     }
 
     useEffect(() => {
-        searchFoodItems(item).then((result) => setFoodItems(result.results))
+        if (item !== '') {
+            searchFoodItems(item).then((result) => setFoodItems(result.results));
+        }
     }, [item]);
     return (
         <div>

@@ -21,11 +21,10 @@ const DetailsScreenComponent = ({user}) => {
     let [liked, setLiked] = useState(false);
 
     useEffect(() => {
-        console.log("useEffect called");
         getFoodItemFromId(params.id).then((result) => {
             setItemDetails(result)
         });
-    }, [user, params.id]);
+    }, [params.id]);
 
     useEffect(() => {
         getRatingsOfFoodItem(itemDetails).then((ratings) => setFoodRatings(ratings));

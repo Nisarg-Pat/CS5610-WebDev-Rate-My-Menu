@@ -96,7 +96,7 @@ const NavigationSidebar = ({
                                                                            ? "al-navbar-active"
                                                                            : "al-navbar-inactive"}`}>
                     <span className={"al-flex al-v-center al-hide-overflow"}>
-                            <i className="fas fa-search"/>
+                            <i className="fas fa-door-closed"/>
                             <span className={"d-none d-lg-block al-margin-left-small"}>Privacy policy</span>
                         </span>
                 </Link>

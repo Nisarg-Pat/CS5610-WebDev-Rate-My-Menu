@@ -1,17 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
-import {getFoodRatingsByUser, getRatingsOfFoodItem,} from "../../services/userFoodRatingService";
+import {getRatingsOfFoodItem,} from "../../services/userFoodRatingService";
 import UserRatingList from "../RatingComponent/UserRatingList";
-import {
-    getRatingsOfRestaurant,
-    getRestaurantRatingsByUser
-} from "../../services/userRestaurantRatingService";
+import {getRatingsOfRestaurant,} from "../../services/userRestaurantRatingService";
 import LoginSignupComponent from "../LoginSignupComponent";
 import {getEmployeesListByRestaurantId, getUsersList} from "../../services/userService";
 import UserItem from "../RestaurantComponent/UserItem";
 import {getFoodLikesByUser} from "../../services/userFoodLikesService";
 import {getRestaurantLikesByUser} from "../../services/userRestaurantLikesService";
-import {getFoodItemFromId} from "../../services/foodItemService";
 
 const HomeScreenComponent = ({user}) => {
 
@@ -24,20 +20,17 @@ const HomeScreenComponent = ({user}) => {
     useEffect(() => {
         if (user.role === "customer") {
             getFoodLikesByUser(user).then((likes) => {
-                likes.map((like) => getRatingsOfFoodItem(like.foodItem).then((ratings) => setFoodRatings(...foodRatings, ratings)))
+                likes.map((like, key) => getRatingsOfFoodItem(like.foodItem).then((ratings) => setFoodRatings(...foodRatings, ratings)))
             });
             getRestaurantLikesByUser(user).then((likes) => {
-                likes.map((like) =>getRatingsOfRestaurant(like.restaurant).then(ratings => setRestaurantRatings(...restaurantRatings, ratings)))
+                likes.map((like, key) =>getRatingsOfRestaurant(like.restaurant).then(ratings => setRestaurantRatings(...restaurantRatings, ratings)))
             });
-            // getFoodRatingsByUser(user).then((ratings) => setFoodRatings(ratings));
-            // getRestaurantRatingsByUser(user).then((ratings) => setRestaurantRatings(ratings));
-
         } else if (user.role === "waiter") {
             getFoodLikesByUser(user).then((likes) => {
-                likes.map((like) => getRatingsOfFoodItem(like.foodItem).then((ratings) => setFoodRatings(...foodRatings, ratings)))
+                likes.map((like, key) => getRatingsOfFoodItem(like.foodItem).then((ratings) => setFoodRatings(...foodRatings, ratings)))
             });
             getRestaurantLikesByUser(user).then((likes) => {
-                likes.map((like) =>getRatingsOfRestaurant(like.restaurant).then(ratings => setRestaurantRatings(...restaurantRatings, ratings)))
+                likes.map((like, key) =>getRatingsOfRestaurant(like.restaurant).then(ratings => setRestaurantRatings(...restaurantRatings, ratings)))
             });
             getEmployeesListByRestaurantId(user.waiterRestaurantId)
                 .then((employees) => setEmployees(employees))
@@ -66,22 +59,22 @@ const HomeScreenComponent = ({user}) => {
                         <h1>
                             New Restaurants
                         </h1>
-                            {users.filter((user)=>user.role === "restaurant").slice(0, 5).map(
-                                (user, key) => <Link to={`/profile/${user._id}`} className={"col-sm-12 col-lg-6 al-color-white al-no-underline"}><UserItem restaurant={user} key={key}/></Link>)}
+                            {users.filter((user, key)=>user.role === "restaurant").slice(0, 10).map(
+                                (user, key) => <div className={"col-sm-12 col-lg-6 al-color-white al-no-underline"}><UserItem restaurant={user} key={key}/></div>)}
                     </div>
                     <div className={"row al-border-bottom"}>
                         <h1>
                             New Customers
                         </h1>
-                        {users.filter((user)=>user.role === "customer").slice(0, 5).map(
-                            (user, key) => <Link to={`/profile/${user._id}`} className={"col-sm-12 col-lg-6 al-color-white al-no-underline"}><UserItem restaurant={user} key={key}/></Link>)}
+                        {users.filter((user, key)=>user.role === "customer").slice(0, 10).map(
+                            (user, key) => <div className={"col-sm-12 col-lg-6 al-color-white al-no-underline"}><UserItem restaurant={user} key={key}/></div>)}
                     </div>
                     <div className={"row"}>
                         <h1>
                             New Employees
                         </h1>
-                        {users.filter((user)=>user.role === "waiter").slice(0, 5).map(
-                            (user, key) => <Link to={`/profile/${user._id}`} className={"col-sm-12 col-lg-6 al-color-white al-no-underline"}><UserItem restaurant={user} key={key}/></Link>)}
+                        {users.filter((user, key)=>user.role === "waiter").slice(0, 10).map(
+                            (user, key) => <div className={"col-sm-12 col-lg-6 al-color-white al-no-underline"}><UserItem restaurant={user} key={key}/></div>)}
                     </div>
                 </div>
                 <div className={"d-none d-md-block col-md-2"}>
