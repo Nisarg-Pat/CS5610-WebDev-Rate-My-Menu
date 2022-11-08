@@ -1,6 +1,6 @@
 const SERVER_API = process.env.NODE_ENV === 'development'
                    ? "http://localhost:4000/api"
-                   : "";
+                   : "https://web-dev-project-node-nisargpat.herokuapp.com/api";
 
 export const addRestaurantRating = (restaurantRating) => {
     return fetch(`${SERVER_API}/restaurantRating`, {
