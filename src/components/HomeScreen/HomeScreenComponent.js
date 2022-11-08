@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
 import {getRatingsOfFoodItem,} from "../../services/userFoodRatingService";
 import UserRatingList from "../RatingComponent/UserRatingList";
 import {getRatingsOfRestaurant,} from "../../services/userRestaurantRatingService";
@@ -42,7 +41,7 @@ const HomeScreenComponent = ({user}) => {
         } else {
             getUsersList().then(users => setUsers(users))
         }
-    }, [user]);
+    }, [user, foodRatings, restaurantRatings]);
 
     const getNoUserHome = () => {
         return (
